@@ -18,9 +18,11 @@
   .alert{border-radius:8px;padding:12px 16px;margin-bottom:10px;font-size:13px;display:flex;gap:10px;align-items:flex-start;line-height:1.5;}
   .alert-danger{background:#FCEEED;border:1px solid #F09595;color:#A32D2D;}
   .alert-warn{background:#FEF3CD;border:1px solid #E8C170;color:#7A4A00;}
+  .alert-ok{background:#EAF3DE;border:1px solid #90C060;color:#3B6D11;}
   .sl{font-size:11px;font-weight:600;color:#888;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px;}
   .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
   .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:16px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
   .mcard{background:#fff;border-radius:8px;padding:14px 16px;border:1px solid #E0DED6;}
   .mcard .lbl{font-size:12px;color:#666;margin-bottom:4px;}
   .mcard .val{font-size:22px;font-weight:500;}
@@ -39,10 +41,22 @@
   .ftable td{padding:7px 10px;border-bottom:1px solid #EDEDEA;}
   .ftable tr:last-child td{border-bottom:none;}
   .ftable tr:hover td{background:#FAFAF8;}
-  .ftable .prev td{background:#F7F5F0;color:#888;font-style:italic;}
   .divider{height:1px;background:#E0DED6;margin:20px 0;}
+  /* Risk cards */
+  .risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+  .risk-card{border-radius:10px;padding:14px 16px;border:1.5px solid;}
+  .risk-card.critico{background:#FCEEED;border-color:#F09595;}
+  .risk-card.atencao{background:#FEF3CD;border-color:#E8C170;}
+  .risk-card.ok{background:#EAF3DE;border-color:#90C060;}
+  .risk-card .rk-grupo{font-size:13px;font-weight:600;margin-bottom:4px;}
+  .risk-card.critico .rk-grupo{color:#A32D2D;}
+  .risk-card.atencao .rk-grupo{color:#854F0B;}
+  .risk-card.ok .rk-grupo{color:#3B6D11;}
+  .risk-card .rk-est{font-size:20px;font-weight:500;margin:4px 0;}
+  .risk-card .rk-sub{font-size:11px;color:#888;margin-top:2px;}
+  .risk-card .rk-when{font-size:12px;font-weight:500;margin-top:6px;}
   footer{text-align:center;padding:20px;font-size:12px;background:#1A3C2A;color:#7AAA80;margin-top:24px;}
-  @media(max-width:700px){.grid4{grid-template-columns:repeat(2,1fr);}.grid2{grid-template-columns:1fr;}.container{padding:16px 14px;}}
+  @media(max-width:700px){.grid4{grid-template-columns:repeat(2,1fr);}.grid2{grid-template-columns:1fr;}.risk-grid{grid-template-columns:repeat(2,1fr);}.container{padding:16px 14px;}}
 </style>
 </head>
 <body>
@@ -50,31 +64,78 @@
 <div class="topbar">
   <div>
     <div class="title">S&OP — Cervejaria Tabuas</div>
-    <div class="sub">Saídas realizadas S18–S23 · Previsão S24–S37 · 2026</div>
+    <div class="sub">Saídas realizadas S18–S23 · Previsão S24–S49 · 2026</div>
   </div>
-  <span class="badge b-info">Semana 24 · jun/2026</span>
+  <span class="badge b-danger">⚠ Ação imediata — Trevo e Estaca</span>
 </div>
 
 <div class="container">
 
+  <!-- ALERTAS -->
   <div style="margin-bottom:20px;">
     <div class="alert alert-danger">
-      <span style="font-size:18px;flex-shrink:0">⚠️</span>
-      <span><strong>Alerta crítico:</strong> estoque planejado entra em zona negativa a partir da semana 45. Planejamento de produção para 2º semestre precisa ser definido nesta reunião.</span>
+      <span style="font-size:18px;flex-shrink:0">🚨</span>
+      <span><strong>Ação imediata — esta semana (S24, 08/jun):</strong> Trevo (déficit 4 L) e Estaca (déficit 314 L) sem envase planejado esta semana. Sem entrada de produto, haverá falta nos bares a partir de hoje.</span>
     </div>
     <div class="alert alert-warn">
-      <span style="font-size:18px;flex-shrink:0">⚡</span>
-      <span><strong>Atenção:</strong> semanas 27 (499 L) e 33 (566 L) com saídas planejadas bem abaixo da média — confirmar se é intencional ou falta de preenchimento.</span>
+      <span style="font-size:18px;flex-shrink:0">⚠️</span>
+      <span><strong>Médio prazo:</strong> Escura acaba S37 (07/set) · Sour acaba S39 (21/set) · NEIPA acaba S41 (05/out). Planejar envases adicionais.</span>
+    </div>
+    <div class="alert alert-ok">
+      <span style="font-size:18px;flex-shrink:0">✅</span>
+      <span><strong>Sem risco:</strong> Capim (2.505 L no final do plano) e Outras (271 L) estão cobertos até o fim do horizonte planejado.</span>
     </div>
   </div>
 
-  <p class="sl">Visão geral — posição semana 24 · 09/jun/2026</p>
+  <!-- RISK CARDS POR GRUPO -->
+  <p class="sl">Risco de falta por grupo de cerveja</p>
+  <div class="risk-grid">
+    <div class="risk-card critico">
+      <div class="rk-grupo">🚨 Trevo</div>
+      <div class="rk-est">484 L</div>
+      <div class="rk-sub">Estoque atual · saída S24: 488 L</div>
+      <div class="rk-when" style="color:#A32D2D">Falta esta semana · S24 (08/jun)</div>
+    </div>
+    <div class="risk-card critico">
+      <div class="rk-grupo">🚨 Estaca</div>
+      <div class="rk-est">74 L</div>
+      <div class="rk-sub">Estoque atual · saída S24: 388 L</div>
+      <div class="rk-when" style="color:#A32D2D">Falta esta semana · S24 (08/jun)</div>
+    </div>
+    <div class="risk-card atencao">
+      <div class="rk-grupo">⚠️ Escura</div>
+      <div class="rk-est">489 L</div>
+      <div class="rk-sub">Estoque atual · próx. envase S28</div>
+      <div class="rk-when" style="color:#854F0B">Risco na S37 · 07/set</div>
+    </div>
+    <div class="risk-card atencao">
+      <div class="rk-grupo">⚠️ Sour</div>
+      <div class="rk-est">468 L</div>
+      <div class="rk-sub">Estoque atual · próx. envase S29</div>
+      <div class="rk-when" style="color:#854F0B">Risco na S39 · 21/set</div>
+    </div>
+    <div class="risk-card atencao">
+      <div class="rk-grupo">⚠️ NEIPA</div>
+      <div class="rk-est">713 L</div>
+      <div class="rk-sub">Estoque atual · próx. envase S28</div>
+      <div class="rk-when" style="color:#854F0B">Risco na S41 · 05/out</div>
+    </div>
+    <div class="risk-card ok">
+      <div class="rk-grupo">✅ Capim</div>
+      <div class="rk-est">688 L</div>
+      <div class="rk-sub">Estoque atual · envases regulares</div>
+      <div class="rk-when" style="color:#3B6D11">OK até S49 · 2.505 L final</div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <p class="sl">Visão geral — posição S24 · 09/jun/2026</p>
   <div class="grid4" style="margin-bottom:24px;">
     <div class="mcard">
       <div class="mcard-top" style="background:#2C5F2D;"></div>
-      <div class="lbl">Estoque atual (S23 real)</div>
-      <div class="val" style="color:#2C5F2D">3.395 L</div>
-      <div class="sub">Posição real confirmada</div>
+      <div class="lbl">Estoque total atual</div>
+      <div class="val" style="color:#2C5F2D">3.290 L</div>
+      <div class="sub">Posição real S23</div>
     </div>
     <div class="mcard">
       <div class="mcard-top" style="background:#1B6CA8;"></div>
@@ -90,37 +151,39 @@
     </div>
     <div class="mcard">
       <div class="mcard-top" style="background:#A32D2D;"></div>
-      <div class="lbl">Estoque negativo em</div>
-      <div class="val" style="color:#A32D2D">Sem. 45</div>
-      <div class="sub">02/nov · conforme plano atual</div>
+      <div class="lbl">Grupos em risco imediato</div>
+      <div class="val" style="color:#A32D2D">2 grupos</div>
+      <div class="sub">Trevo e Estaca · esta semana</div>
     </div>
   </div>
 
-  <!-- GRÁFICO: saída semanal realizada vs planejada -->
+  <!-- GRÁFICO: projeção estoque por grupo -->
   <div class="panel">
-    <div class="panel-title"><div class="pi" style="background:#EAF3DE;">📈</div>Saídas semanais — realizadas vs. planejadas (litros)</div>
+    <div class="panel-title"><div class="pi" style="background:#FCEEED;">📦</div>Projeção de estoque por grupo — S24 a S45</div>
+    <div class="legend">
+      <span><span class="ld" style="background:#2C5F2D;"></span>Trevo</span>
+      <span><span class="ld" style="background:#1B6CA8;"></span>Estaca</span>
+      <span><span class="ld" style="background:#D4820A;"></span>Capim</span>
+      <span><span class="ld" style="background:#7B5EA7;"></span>NEIPA</span>
+      <span><span class="ld" style="background:#D85A30;"></span>Sour</span>
+      <span><span class="ld" style="background:#6B4C3B;"></span>Escura</span>
+    </div>
+    <div style="position:relative;width:100%;height:280px;"><canvas id="cEstGrupo"></canvas></div>
+  </div>
+
+  <!-- GRÁFICO: saída realizada vs planejada -->
+  <div class="panel">
+    <div class="panel-title"><div class="pi" style="background:#EAF3DE;">📈</div>Saídas semanais — realizadas vs. planejadas (total)</div>
     <div class="legend">
       <span><span class="ld" style="background:#2C5F2D;"></span>Realizado</span>
-      <span><span class="ld" style="background:#2C5F2D;opacity:0.35;"></span>Planejado</span>
-      <span style="font-size:11px;color:#aaa;">| linha tracejada = divisão realizado/previsto</span>
+      <span><span class="ld" style="background:#2C5F2D;opacity:0.3;"></span>Planejado</span>
     </div>
-    <div style="position:relative;width:100%;height:270px;"><canvas id="cRealVsPlan"></canvas></div>
-  </div>
-
-  <!-- GRÁFICO: projeção de estoque -->
-  <div class="panel">
-    <div class="panel-title"><div class="pi" style="background:#FEF3CD;">📦</div>Projeção de estoque — S18 a S52</div>
-    <div class="legend">
-      <span><span class="ld" style="background:#2C5F2D;"></span>Estoque real</span>
-      <span><span class="ld" style="background:#378ADD;"></span>Estoque planejado</span>
-      <span><span class="ld" style="background:#E24B4A;"></span>Mínimo (2× saída média)</span>
-    </div>
-    <div style="position:relative;width:100%;height:260px;"><canvas id="cEstoque"></canvas></div>
+    <div style="position:relative;width:100%;height:250px;"><canvas id="cRealVsPlan"></canvas></div>
   </div>
 
   <div class="grid2">
     <div class="panel" style="margin-bottom:0">
-      <div class="panel-title"><div class="pi" style="background:#E6F1FB;">🍺</div>Saídas por grupo — realizadas</div>
+      <div class="panel-title"><div class="pi" style="background:#E6F1FB;">🍺</div>Saídas realizadas por grupo</div>
       <div class="tab-row">
         <button class="tb active" onclick="setGrupo('todos',this)">Todos</button>
         <button class="tb" onclick="setGrupo('trevo',this)">Trevo</button>
@@ -132,15 +195,14 @@
       <div style="position:relative;width:100%;height:210px;"><canvas id="cGrupo"></canvas></div>
     </div>
     <div class="panel" style="margin-bottom:0">
-      <div class="panel-title"><div class="pi" style="background:#FEF3CD;">🏪</div>Mix por grupo · S18–S23</div>
+      <div class="panel-title"><div class="pi" style="background:#FEF3CD;">🏪</div>Mix por canal · S18–S23</div>
       <div class="legend">
-        <span><span class="ld" style="background:#2C5F2D;"></span>Trevo 25%</span>
-        <span><span class="ld" style="background:#1B6CA8;"></span>Estaca 17%</span>
-        <span><span class="ld" style="background:#D4820A;"></span>Capim 16%</span>
-        <span><span class="ld" style="background:#7B5EA7;"></span>NEIPA 13%</span>
-        <span><span class="ld" style="background:#D85A30;"></span>Sour 12%</span>
-        <span><span class="ld" style="background:#6B4C3B;"></span>Escura 2%</span>
-        <span><span class="ld" style="background:#888;"></span>Outras 15%</span>
+        <span><span class="ld" style="background:#2C5F2D;"></span>Cambuí 28%</span>
+        <span><span class="ld" style="background:#1B6CA8;"></span>Barão 19%</span>
+        <span><span class="ld" style="background:#D4820A;"></span>Valinhos 28%</span>
+        <span><span class="ld" style="background:#7B5EA7;"></span>Caixote 8%</span>
+        <span><span class="ld" style="background:#D85A30;"></span>Eventos 8%</span>
+        <span><span class="ld" style="background:#888;"></span>Ext. 9%</span>
       </div>
       <div style="position:relative;width:100%;height:210px;"><canvas id="cMix"></canvas></div>
     </div>
@@ -148,20 +210,56 @@
 
   <div class="divider"></div>
 
-  <!-- TABELA cobertura completa -->
+  <!-- TABELA RISCO -->
   <div class="panel">
-    <div class="panel-title"><div class="pi" style="background:#EAF3DE;">📋</div>Cobertura semana a semana — S18 a S45</div>
+    <div class="panel-title"><div class="pi" style="background:#FCEEED;">🚨</div>Tabela de risco por grupo — estoque atual + projeção</div>
     <div style="overflow-x:auto;">
       <table class="ftable">
-        <thead><tr><th>Sem.</th><th>Período</th><th>Entrada (L)</th><th>Saída (L)</th><th>Estoque plan. (L)</th><th>Estoque real (L)</th><th>Status</th></tr></thead>
-        <tbody id="tCobertura"></tbody>
+        <thead><tr><th>Grupo</th><th>Estoque atual (L)</th><th>Próx. envase</th><th>Vol. envase (L)</th><th>Saída S24 (L)</th><th>Estoque pós-S24 (L)</th><th>Risco</th></tr></thead>
+        <tbody>
+          <tr style="background:#FCEEED">
+            <td><strong>Trevo</strong></td><td>484</td><td>S25 · 15/jun</td><td>570</td><td>488</td>
+            <td style="color:#A32D2D;font-weight:600">-4</td>
+            <td><span class="badge b-danger">Falta esta semana</span></td>
+          </tr>
+          <tr style="background:#FCEEED">
+            <td><strong>Estaca</strong></td><td>74</td><td>S25 · 15/jun</td><td>920</td><td>388</td>
+            <td style="color:#A32D2D;font-weight:600">-314</td>
+            <td><span class="badge b-danger">Falta esta semana</span></td>
+          </tr>
+          <tr style="background:#FEF3CD">
+            <td><strong>Escura</strong></td><td>489</td><td>S28 · 06/jul</td><td>160</td><td>65</td>
+            <td>424</td>
+            <td><span class="badge b-warn">Risco S37 · set</span></td>
+          </tr>
+          <tr style="background:#FEF3CD">
+            <td><strong>Sour</strong></td><td>468</td><td>S29 · 13/jul</td><td>1.000</td><td>111</td>
+            <td>357</td>
+            <td><span class="badge b-warn">Risco S39 · set</span></td>
+          </tr>
+          <tr style="background:#FEF3CD">
+            <td><strong>NEIPA</strong></td><td>713</td><td>S24 · 08/jun</td><td>530</td><td>208</td>
+            <td>1.035</td>
+            <td><span class="badge b-warn">Risco S41 · out</span></td>
+          </tr>
+          <tr>
+            <td><strong>Capim</strong></td><td>688</td><td>S25 · 15/jun</td><td>1.000</td><td>270</td>
+            <td>418</td>
+            <td><span class="badge b-ok">OK</span></td>
+          </tr>
+          <tr>
+            <td><strong>Outras</strong></td><td>374</td><td>S24 · 08/jun</td><td>530</td><td>218</td>
+            <td>686</td>
+            <td><span class="badge b-ok">OK</span></td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>
 
-  <!-- TABELA grupos realizados -->
+  <!-- TABELA saídas realizadas por grupo -->
   <div class="panel">
-    <div class="panel-title"><div class="pi" style="background:#E6F1FB;">📊</div>Saídas por grupo — semana a semana (realizadas)</div>
+    <div class="panel-title"><div class="pi" style="background:#E6F1FB;">📊</div>Saídas realizadas por grupo — S18 a S23</div>
     <div style="overflow-x:auto;">
       <table class="ftable">
         <thead><tr><th>Grupo</th><th>S18</th><th>S19</th><th>S20</th><th>S21</th><th>S22</th><th>S23</th><th>Total</th></tr></thead>
@@ -173,13 +271,17 @@
   <div class="panel" style="background:#1A3C2A;border-color:#2C5F2D;">
     <div style="font-size:14px;font-weight:500;color:#fff;margin-bottom:12px;">📌 Decisões necessárias — reunião S&OP</div>
     <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#A32D2D;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:center;">
+        <span style="background:#fff;color:#A32D2D;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;white-space:nowrap;">🚨 URGENTE</span>
+        <span style="color:#fff;font-size:13px;">Trevo e Estaca sem estoque esta semana — antecipar envase ou acionar chope convidado imediatamente</span>
+      </div>
       <div style="background:#2C5F2D;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:center;">
         <span style="background:#D4820A;color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;white-space:nowrap;">D1</span>
-        <span style="color:#C8E6C9;font-size:13px;">Definir planejamento de envases para 2º semestre (a partir de ago/set)</span>
+        <span style="color:#C8E6C9;font-size:13px;">Planejar envases adicionais de Escura (S37), Sour (S39) e NEIPA (S41)</span>
       </div>
       <div style="background:#2C5F2D;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:center;">
         <span style="background:#1B6CA8;color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;white-space:nowrap;">D2</span>
-        <span style="color:#C8E6C9;font-size:13px;">Confirmar saídas das semanas 27 (499 L) e 33 (566 L) — abaixo da média</span>
+        <span style="color:#C8E6C9;font-size:13px;">Confirmar demanda e eventos para as semanas 30–32</span>
       </div>
       <div style="background:#2C5F2D;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:center;">
         <span style="background:#7B5EA7;color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;white-space:nowrap;">D3</span>
@@ -193,136 +295,93 @@
 
 <script>
 const gc='rgba(0,0,0,0.06)',tc='#888';
+const semsReal=['S18','S19','S20','S21','S22','S23'];
 
-// Semanas com dados
-const semsReal = [18,19,20,21,22,23];
-const saidaReal = [39,1604,1325,2227,1150,1964];
-const entReal  = [0,557,1742,2928,1496,2701];
+// Dados realizados por grupo
+const gruposData={
+  trevo: [1,507,400,500,296,543],
+  estaca:[4,158,11,640,219,709],
+  capim: [26,230,496,370,55,209],
+  NEIPA: [11,312,284,386,186,134],
+  sour:  [9,252,194,56,317,206],
+  escura:[2,4,2,0,31,138],
+  outras:[2,188,163,313,176,100]
+};
+const coresGrupo={trevo:'#2C5F2D',estaca:'#1B6CA8',capim:'#D4820A',NEIPA:'#7B5EA7',sour:'#D85A30',escura:'#6B4C3B',outras:'#888'};
 
-// Saídas planejadas S18–S45
-const semsPlan = [18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45];
-const saidaPlan= [776,1812,1812,1812,1812,1748,1748,2748,1748,499,1296,1815,1815,1815,1296,566,1983,1983,1983,1983,283,1945,2269,2269,2269,973,1350,2363];
-const entPlan  = [2200,600,1850,3000,2300,3070,1060,2490,2300,900,2418,2500,1100,1620,1570,2190,2270,730,1070,1570,570,1230,1570,570,1230,1570,570,1230];
+// Projeção estoque por grupo S24-S45 (com envases)
+const semsProj=[24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45];
+const estProj={
+  trevo: [-4,78,160,591,799,862,925,988,1196,1607,1622,1637,1652,1667,2158,2189,2130,2071,2012,2313,2501,2403],
+  estaca:[-314,218,760,649,362,-40,-442,-844,-1131,-336,-773,-1210,-1647,-2084,-2146,-2577,-3080,-3583,-4086,-4301,-4596,-5112],
+  capim: [418,648,378,301,1051,771,491,211,-189,723,1416,1109,802,495,451,150,-202,-554,-906,-57,332,-408],
+  NEIPA: [1035,827,619,559,1143,927,711,495,341,974,1439,1204,969,734,700,466,193,-80,-353,-470,-629,-907],
+  sour:  [357,246,135,103,1020,904,788,672,589,553,427,301,175,49,31,-93,-238,-383,-528,-590,-676,-826],
+  escura:[424,359,294,275,386,318,250,182,133,112,37,-38,-113,-188,-199,-271,-355,-439,-523,-559,-610,-700]
+};
 
-// Estoque real confirmado S18–S23
-const estReal  = {18:2241,19:1194,20:1611,21:2312,22:2658,23:3395};
-// Estoque planejado completo
-const estPlan  = {18:3704,19:1029,20:1716,21:2799,22:2800,23:3980,24:3292,25:3034,26:3585,27:3986,28:5108,29:5793,30:5079,31:4884,32:5158,33:6781,34:7069,35:5816,36:4903,37:4491,38:4777,39:4062,40:3363,41:1664,42:624,43:1222,44:442,45:-691};
+// Gráfico projeção por grupo
+const labels=semsProj.map(s=>'S'+s);
+new Chart(document.getElementById('cEstGrupo'),{
+  type:'line',
+  data:{labels, datasets:['trevo','estaca','capim','NEIPA','sour','escura'].map(g=>({
+    label:g, data:estProj[g],
+    borderColor:coresGrupo[g], backgroundColor:'transparent',
+    tension:0.3, pointRadius:3, borderWidth:2,
+    borderDash: estProj[g][0]<0 ? [4,3] : []
+  }))},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:true,position:'top',labels:{color:tc,font:{size:11},boxWidth:10}},
+      tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw.toLocaleString('pt-BR')} L`}}},
+    scales:{
+      x:{ticks:{color:tc,font:{size:10},autoSkip:false,maxRotation:45},grid:{color:gc}},
+      y:{ticks:{color:tc,font:{size:11}},grid:{color:gc},
+        title:{display:true,text:'Litros',color:tc,font:{size:11}}}
+    }
+  }
+});
 
-const datas = {18:'27/abr',19:'04/mai',20:'11/mai',21:'18/mai',22:'25/mai',23:'01/jun',24:'08/jun',25:'15/jun',26:'22/jun',27:'29/jun',28:'06/jul',29:'13/jul',30:'20/jul',31:'27/jul',32:'03/ago',33:'10/ago',34:'17/ago',35:'24/ago',36:'31/ago',37:'07/set',38:'14/set',39:'21/set',40:'28/set',41:'05/out',42:'12/out',43:'19/out',44:'26/out',45:'02/nov'};
-
-// ── GRÁFICO 1: Realizado vs Planejado ──
-const allSems = [...new Set([...semsReal,...semsPlan])].sort((a,b)=>a-b);
-const realData = allSems.map(s => semsReal.includes(s) ? saidaReal[semsReal.indexOf(s)] : null);
-const planData = allSems.map(s => { const i=semsPlan.indexOf(s); return i>=0?saidaPlan[i]:null; });
-
+// Gráfico realizado vs planejado
+const allSems=[18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35];
+const saidaReal=[39,1604,1325,2227,1150,1964,null,null,null,null,null,null,null,null,null,null,null,null];
+const saidaPlan=[776,1812,1812,1812,1812,1748,1748,2748,1748,499,1296,1815,1815,1815,1296,566,1983,1983];
 new Chart(document.getElementById('cRealVsPlan'),{
   type:'bar',
-  data:{ labels:allSems.map(s=>'S'+s), datasets:[
-    { label:'Realizado', data:realData, backgroundColor:'#2C5F2D', borderRadius:3 },
-    { label:'Planejado', data:planData, backgroundColor:'rgba(44,95,45,0.3)', borderRadius:3 }
+  data:{labels:allSems.map(s=>'S'+s),datasets:[
+    {label:'Realizado',data:saidaReal,backgroundColor:'#2C5F2D',borderRadius:3},
+    {label:'Planejado',data:saidaPlan,backgroundColor:'rgba(44,95,45,0.25)',borderRadius:3}
   ]},
-  options:{ responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${(ctx.raw||0).toLocaleString('pt-BR')} L`}} },
-    scales:{
-      x:{ticks:{color:tc,font:{size:9},autoSkip:false,maxRotation:45},grid:{color:gc}},
-      y:{ticks:{color:tc,font:{size:11}},grid:{color:gc}}
-    }
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{ticks:{color:tc,font:{size:10},autoSkip:false,maxRotation:45},grid:{color:gc}},y:{ticks:{color:tc,font:{size:11}},grid:{color:gc}}}
   }
 });
 
-// ── GRÁFICO 2: Projeção estoque ──
-const semsEst = Object.keys(estPlan).map(Number).sort((a,b)=>a-b);
-const estPlanArr = semsEst.map(s=>estPlan[s]);
-const estRealArr = semsEst.map(s=>estReal[s]||null);
-const minDin = semsEst.map(()=>1770*2);
-
-new Chart(document.getElementById('cEstoque'),{
-  type:'line',
-  data:{ labels:semsEst.map(s=>'S'+s), datasets:[
-    { label:'Estoque real', data:estRealArr, borderColor:'#2C5F2D', backgroundColor:'rgba(44,95,45,0.08)', fill:true, tension:0.3, pointRadius:4, borderWidth:2 },
-    { label:'Estoque planejado', data:estPlanArr, borderColor:'#378ADD', backgroundColor:'transparent', tension:0.3, pointRadius:3, borderWidth:2, borderDash:[4,2] },
-    { label:'Mínimo', data:minDin, borderColor:'#E24B4A', borderDash:[5,4], pointRadius:0, borderWidth:1.5, backgroundColor:'transparent' }
-  ]},
-  options:{ responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${(ctx.raw||0).toLocaleString('pt-BR')} L`}} },
-    scales:{
-      x:{ticks:{color:tc,font:{size:9},autoSkip:true,maxRotation:45},grid:{color:gc}},
-      y:{ticks:{color:tc,font:{size:11}},grid:{color:gc}}
-    }
-  }
-});
-
-// ── GRÁFICO 3: Por grupo ──
-const gruposData={
-  trevo: [1,507,400,500,296,543], estaca:[4,158,11,640,219,709],
-  capim: [26,230,496,370,55,209], neipa:[11,312,284,386,186,134],
-  sour:  [9,252,194,56,317,206],  escura:[2,4,2,0,31,138], outras:[2,188,163,313,176,100]
-};
-const coresGrupo={ trevo:'#2C5F2D',estaca:'#1B6CA8',capim:'#D4820A',neipa:'#7B5EA7',sour:'#D85A30',escura:'#6B4C3B',outras:'#888' };
-const semsRealLabels=['S18','S19','S20','S21','S22','S23'];
-
-let chartGrupo = new Chart(document.getElementById('cGrupo'),{
+// Gráfico grupos realizados
+let chartGrupo=new Chart(document.getElementById('cGrupo'),{
   type:'bar',
-  data:{ labels:semsRealLabels, datasets:Object.keys(gruposData).map(g=>({ label:g, data:gruposData[g], backgroundColor:coresGrupo[g], borderRadius:2, stack:'a' })) },
-  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-    scales:{ x:{stacked:true,ticks:{color:tc,font:{size:11}},grid:{color:gc}}, y:{stacked:true,ticks:{color:tc,font:{size:11}},grid:{color:gc}} }
-  }
+  data:{labels:semsReal,datasets:Object.keys(gruposData).map(g=>({label:g,data:gruposData[g],backgroundColor:coresGrupo[g],borderRadius:2,stack:'a'}))},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{stacked:true,ticks:{color:tc,font:{size:11}},grid:{color:gc}},y:{stacked:true,ticks:{color:tc,font:{size:11}},grid:{color:gc}}}}
 });
-
-function setGrupo(g, btn) {
-  document.querySelectorAll('.tab-row .tb').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+function setGrupo(g,btn){
+  document.querySelectorAll('.tab-row .tb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
   chartGrupo.destroy();
-  const ds = g==='todos'
-    ? Object.keys(gruposData).map(k=>({ label:k, data:gruposData[k], backgroundColor:coresGrupo[k], borderRadius:2, stack:'a' }))
-    : [{ label:g, data:gruposData[g], backgroundColor:coresGrupo[g], borderRadius:3 }];
-  chartGrupo = new Chart(document.getElementById('cGrupo'),{
-    type:'bar', data:{ labels:semsRealLabels, datasets:ds },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-      scales:{ x:{stacked:g==='todos',ticks:{color:tc,font:{size:11}},grid:{color:gc}}, y:{stacked:g==='todos',ticks:{color:tc,font:{size:11}},grid:{color:gc}} }
-    }
-  });
+  const ds=g==='todos'?Object.keys(gruposData).map(k=>({label:k,data:gruposData[k],backgroundColor:coresGrupo[k],borderRadius:2,stack:'a'})):[{label:g,data:gruposData[g.toLowerCase()]||gruposData[g],backgroundColor:coresGrupo[g.toLowerCase()]||coresGrupo[g],borderRadius:3}];
+  chartGrupo=new Chart(document.getElementById('cGrupo'),{type:'bar',data:{labels:semsReal,datasets:ds},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{stacked:g==='todos',ticks:{color:tc,font:{size:11}},grid:{color:gc}},y:{stacked:g==='todos',ticks:{color:tc,font:{size:11}},grid:{color:gc}}}}});
 }
 
-// Donut mix grupos
-const totGrupos=Object.keys(gruposData).map(g=>gruposData[g].reduce((a,b)=>a+b,0));
-const totG=totGrupos.reduce((a,b)=>a+b,0);
-new Chart(document.getElementById('cMix'),{
-  type:'doughnut',
-  data:{ labels:Object.keys(gruposData), datasets:[{ data:totGrupos, backgroundColor:Object.keys(gruposData).map(g=>coresGrupo[g]), borderWidth:0 }] },
-  options:{ responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw.toLocaleString('pt-BR')} L (${Math.round(ctx.raw/totG*100)}%)`}} }
-  }
+// Donut mix canais
+new Chart(document.getElementById('cMix'),{type:'doughnut',
+  data:{labels:['Cambuí','Barão','Valinhos','Caixote','Eventos','Ext.'],
+    datasets:[{data:[2469,1664,2522,680,750,757],backgroundColor:['#2C5F2D','#1B6CA8','#D4820A','#7B5EA7','#D85A30','#888'],borderWidth:0}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw.toLocaleString('pt-BR')} L (${Math.round(ctx.raw/8842*100)}%)`}}}}
 });
 
-// Tabela cobertura
-const tbody=document.getElementById('tCobertura');
-semsPlan.forEach((s,i)=>{
-  const ep=estPlan[s], er=estReal[s]||null;
-  const saida=saidaPlan[i];
-  const cobN=(ep/1770).toFixed(1);
-  let badge,rowCls='';
-  if(ep<=0) badge='<span class="badge b-danger">Estoque zero</span>';
-  else if(parseFloat(cobN)<1) badge='<span class="badge b-danger">Crítico</span>';
-  else if(parseFloat(cobN)<2) badge='<span class="badge b-warn">Atenção</span>';
-  else if(entPlan[i]===0&&i>5) badge='<span class="badge b-warn">Sem entrada</span>';
-  else badge='<span class="badge b-ok">OK</span>';
-  if(s>23) rowCls='prev';
-  const atual=s===24?' <span class="badge b-info">atual</span>':'';
-  const epColor=ep<=0?'color:#A32D2D;font-weight:600':ep<3540?'color:#854F0B':'';
-  tbody.innerHTML+=`<tr class="${rowCls}">
-    <td><strong>S${s}</strong>${atual}</td>
-    <td>${datas[s]||''}</td>
-    <td>${entPlan[i]>0?entPlan[i].toLocaleString('pt-BR'):'—'}</td>
-    <td>${saida.toLocaleString('pt-BR')}</td>
-    <td style="${epColor}">${ep.toLocaleString('pt-BR')}</td>
-    <td>${er!==null?er.toLocaleString('pt-BR'):'—'}</td>
-    <td>${badge}</td>
-  </tr>`;
-});
-
-// Tabela grupos
+// Tabela grupos realizados
 const tGrupo=document.getElementById('tGrupo');
 const grpKeys=Object.keys(gruposData);
 let totSem=[0,0,0,0,0,0];
