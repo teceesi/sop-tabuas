@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S&OP — Cervejaria Tabuas</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F4F2ED;color:#1C2B1E;}
+  .topbar{background:#1A3C2A;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+  .topbar .title{color:#fff;font-size:16px;font-weight:500;}
+  .topbar .sub{color:#7AAA80;font-size:12px;margin-top:2px;}
+  .badge{display:inline-block;padding:3px 12px;border-radius:4px;font-size:11px;font-weight:600;}
+  .b-ok{background:#EAF3DE;color:#3B6D11;}.b-warn{background:#FEF3CD;color:#854F0B;}
+  .b-danger{background:#FCEEED;color:#A32D2D;}.b-info{background:#E6F1FB;color:#185FA5;}
+  .container{max-width:1100px;margin:0 auto;padding:24px 20px;}
+  .alert{border-radius:8px;padding:12px 16px;margin-bottom:10px;font-size:13px;display:flex;gap:10px;align-items:flex-start;line-height:1.5;}
+  .alert-danger{background:#FCEEED;border:1px solid #F09595;color:#A32D2D;}
+  .alert-warn{background:#FEF3CD;border:1px solid #E8C170;color:#7A4A00;}
+  .alert-ok{background:#EAF3DE;border:1px solid #90C060;color:#3B6D11;}
+  .sl{font-size:11px;font-weight:600;color:#888;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:16px;}
+  .mcard{background:#fff;border-radius:8px;padding:14px 16px;border:1px solid #E0DED6;}
+  .mcard .lbl{font-size:12px;color:#666;margin-bottom:4px;}
+  .mcard .val{font-size:22px;font-weight:500;}
+  .mcard .sub{font-size:11px;color:#999;margin-top:4px;}
+  .mcard-top{height:4px;border-radius:4px 4px 0 0;margin:-14px -16px 12px;}
+  .panel{background:#fff;border-radius:12px;padding:18px;margin-bottom:16px;border:1px solid #E0DED6;}
+  .panel-title{font-size:14px;font-weight:500;color:#1C2B1E;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .pi{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+  .legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;font-size:12px;color:#666;}
+  .ld{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:4px;vertical-align:middle;}
+  .tab-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+  .tb{padding:5px 14px;border-radius:6px;border:1px solid #D0CEC6;background:transparent;cursor:pointer;font-size:12px;color:#666;}
+  .tb:hover{background:#F4F2ED;}.tb.active{background:#1A3C2A;color:#fff;border-color:#1A3C2A;font-weight:500;}
+  .ftable{width:100%;border-collapse:collapse;font-size:12px;}
+  .ftable th{font-size:11px;font-weight:600;color:#888;padding:6px 10px;border-bottom:1px solid #EDEDEA;text-align:left;background:#FAFAF8;}
+  .ftable td{padding:7px 10px;border-bottom:1px solid #EDEDEA;}
+  .ftable tr:last-child td{border-bottom:none;}
+  .ftable tr:hover td{background:#FAFAF8;}
+  .risk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+  .rcard{border-radius:10px;padding:14px 16px;border:1.5px solid;}
+  .rcard.critico{background:#FCEEED;border-color:#F09595;}
+  .rcard.atencao{background:#FEF3CD;border-color:#E8C170;}
+  .rcard.ok{background:#EAF3DE;border-color:#90C060;}
+  .rcard .rg{font-size:13px;font-weight:600;margin-bottom:4px;}
+  .rcard.critico .rg{color:#A32D2D;}.rcard.atencao .rg{color:#854F0B;}.rcard.ok .rg{color:#3B6D11;}
+  .rcard .re{font-size:20px;font-weight:500;margin:4px 0;}
+  .rcard .rs{font-size:11px;color:#888;margin-top:2px;}
+  .rcard .rw{font-size:12px;font-weight:500;margin-top:6px;}
+  .divider{height:1px;background:#E0DED6;margin:20px 0;}
+  footer{text-align:center;padding:20px;font-size:12px;background:#1A3C2A;color:#7AAA80;margin-top:24px;}
+  @media(max-width:700px){.grid4,.risk-grid{grid-template-columns:repeat(2,1fr);}.grid2{grid-template-columns:1fr;}.container{padding:16px 14px;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="title">S&OP — Cervejaria Tabuas</div>
+    <div class="sub">{{SUBTITLE}}</div>
+  </div>
+  {{BADGE}}
+</div>
+
+<div class="container">
+
+  <div style="margin-bottom:20px;">
+{{ALERTS}}
+  </div>
+
+  <p class="sl">Risco de falta por grupo de cerveja — estoque real S{{CUR_WEEK}}</p>
+  <div class="risk-grid">
+{{RISK_CARDS}}
+  </div>
+
+  <p class="sl">Visão geral — posição real S{{CUR_WEEK}} · {{CUR_DATE}}</p>
+  <div class="grid4" style="margin-bottom:24px;">
+{{MCARDS}}
+  </div>
+
+  <div class="panel">
+    <div class="panel-title"><div class="pi" style="background:#FCEEED;">📦</div>Projeção de estoque por grupo — {{PROJ_TITLE}} (reancorada no real S{{CUR_WEEK}})</div>
+    <div class="legend">
+      <span><span class="ld" style="background:#2C5F2D;"></span>Trevo</span>
+      <span><span class="ld" style="background:#1B6CA8;"></span>Estaca</span>
+      <span><span class="ld" style="background:#D4820A;"></span>Capim</span>
+      <span><span class="ld" style="background:#7B5EA7;"></span>NEIPA</span>
+      <span><span class="ld" style="background:#D85A30;"></span>Sour</span>
+      <span><span class="ld" style="background:#6B4C3B;"></span>Escura</span>
+      <span><span class="ld" style="background:#888;"></span>Outras</span>
+    </div>
+    <div style="position:relative;width:100%;height:280px;"><canvas id="cEstGrupo"></canvas></div>
+    <div style="font-size:11px;color:#999;margin-top:8px;">Projeção parte do estoque real da semana corrente e aplica entradas (envases) e saídas planejadas. Valores negativos = ruptura projetada se nada for feito.</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title"><div class="pi" style="background:#EAF3DE;">📈</div>Saídas semanais — realizadas vs. planejadas (total)</div>
+    <div class="legend">
+      <span><span class="ld" style="background:#2C5F2D;"></span>Realizado</span>
+      <span><span class="ld" style="background:#2C5F2D;opacity:0.3;"></span>Planejado</span>
+    </div>
+    <div style="position:relative;width:100%;height:240px;"><canvas id="cRealVsPlan"></canvas></div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel" style="margin-bottom:0">
+      <div class="panel-title"><div class="pi" style="background:#E6F1FB;">🍺</div>Saídas realizadas por grupo</div>
+      <div class="tab-row">
+        <button class="tb active" onclick="setGrupo('todos',this)">Todos</button>
+        <button class="tb" onclick="setGrupo('trevo',this)">Trevo</button>
+        <button class="tb" onclick="setGrupo('estaca',this)">Estaca</button>
+        <button class="tb" onclick="setGrupo('capim',this)">Capim</button>
+        <button class="tb" onclick="setGrupo('NEIPA',this)">NEIPA</button>
+        <button class="tb" onclick="setGrupo('sour',this)">Sour</button>
+      </div>
+      <div style="position:relative;width:100%;height:210px;"><canvas id="cGrupo"></canvas></div>
+    </div>
+    <div class="panel" style="margin-bottom:0">
+      <div class="panel-title"><div class="pi" style="background:#FEF3CD;">🏪</div>Mix por canal · base S18–S23</div>
+      <div class="legend">
+        <span><span class="ld" style="background:#2C5F2D;"></span>Cambuí 28%</span>
+        <span><span class="ld" style="background:#1B6CA8;"></span>Barão 19%</span>
+        <span><span class="ld" style="background:#D4820A;"></span>Valinhos 28%</span>
+        <span><span class="ld" style="background:#7B5EA7;"></span>Caixote 8%</span>
+        <span><span class="ld" style="background:#D85A30;"></span>Eventos 8%</span>
+        <span><span class="ld" style="background:#888;"></span>Ext. 9%</span>
+      </div>
+      <div style="position:relative;width:100%;height:210px;"><canvas id="cMix"></canvas></div>
+      <div style="font-size:11px;color:#999;margin-top:8px;">Mix da base S18–S23 (ainda não automatizado — depende do parse cliente→canal).</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="panel">
+    <div class="panel-title"><div class="pi" style="background:#FCEEED;">🚨</div>Tabela de risco por grupo — estoque real S{{CUR_WEEK}} + projeção S{{NEXT_WEEK}}</div>
+    <div style="overflow-x:auto;">
+      <table class="ftable">
+        <thead><tr><th>Grupo</th><th>Estoque real S{{CUR_WEEK}} (L)</th><th>Entrada S{{NEXT_WEEK}} (L)</th><th>Saída plan. S{{NEXT_WEEK}} (L)</th><th>Saldo pós-S{{NEXT_WEEK}} (L)</th><th>Próx. envase</th><th>Risco</th></tr></thead>
+        <tbody>
+{{RISK_TABLE_ROWS}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title"><div class="pi" style="background:#E6F1FB;">📊</div>Saídas realizadas por grupo — S18 a S{{CUR_WEEK}}</div>
+    <div style="overflow-x:auto;">
+      <table class="ftable">
+        <thead><tr>{{REAL_TABLE_HEAD}}</tr></thead>
+        <tbody id="tGrupo"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel" style="background:#1A3C2A;border-color:#2C5F2D;">
+    <div style="font-size:14px;font-weight:500;color:#fff;margin-bottom:12px;">📌 Decisões necessárias — reunião S&OP</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+{{DECISIONS}}
+    </div>
+  </div>
+
+</div>
+<footer>Cervejaria Tabuas · S&OP · Atualizado automaticamente em {{GENERATED_AT}} · Elaborado por Talita</footer>
+
+<script>
+const gc='rgba(0,0,0,0.06)',tc='#888';
+const semsReal={{SEMS_REAL}};
+const gruposData={{GRUPOS_DATA}};
+const coresGrupo={trevo:'#2C5F2D',estaca:'#1B6CA8',capim:'#D4820A',NEIPA:'#7B5EA7',sour:'#D85A30',escura:'#6B4C3B',outras:'#888'};
+
+const semsProj={{SEMS_PROJ}};
+const estProj={{EST_PROJ}};
+
+new Chart(document.getElementById('cEstGrupo'),{
+  type:'line',
+  data:{labels:semsProj.map(s=>'S'+s),datasets:Object.keys(estProj).map(g=>({
+    label:g,data:estProj[g],borderColor:coresGrupo[g],backgroundColor:'transparent',
+    tension:0.3,pointRadius:3,borderWidth:2
+  }))},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:true,position:'top',labels:{color:tc,font:{size:11},boxWidth:10}},
+      tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw.toLocaleString('pt-BR')} L`}}},
+    scales:{
+      x:{ticks:{color:tc,font:{size:10},autoSkip:false,maxRotation:45},grid:{color:gc}},
+      y:{ticks:{color:tc,font:{size:11}},grid:{color:gc},title:{display:true,text:'Litros',color:tc,font:{size:11}}}
+    }
+  }
+});
+
+const allSems={{ALL_SEMS}};
+const saidaReal={{SAIDA_REAL}};
+const saidaPlan={{SAIDA_PLAN}};
+new Chart(document.getElementById('cRealVsPlan'),{
+  type:'bar',
+  data:{labels:allSems.map(s=>'S'+s),datasets:[
+    {label:'Realizado',data:saidaReal,backgroundColor:'#2C5F2D',borderRadius:3},
+    {label:'Planejado',data:saidaPlan,backgroundColor:'rgba(44,95,45,0.25)',borderRadius:3}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{ticks:{color:tc,font:{size:10},autoSkip:false,maxRotation:45},grid:{color:gc}},y:{ticks:{color:tc,font:{size:11}},grid:{color:gc}}}
+  }
+});
+
+let chartGrupo=new Chart(document.getElementById('cGrupo'),{
+  type:'bar',
+  data:{labels:semsReal,datasets:Object.keys(gruposData).map(g=>({label:g,data:gruposData[g],backgroundColor:coresGrupo[g],borderRadius:2,stack:'a'}))},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{stacked:true,ticks:{color:tc,font:{size:11}},grid:{color:gc}},y:{stacked:true,ticks:{color:tc,font:{size:11}},grid:{color:gc}}}}
+});
+function setGrupo(g,btn){
+  document.querySelectorAll('.tab-row .tb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  chartGrupo.destroy();
+  const ds=g==='todos'?Object.keys(gruposData).map(k=>({label:k,data:gruposData[k],backgroundColor:coresGrupo[k],borderRadius:2,stack:'a'})):[{label:g,data:gruposData[g]||gruposData[g.toLowerCase()],backgroundColor:coresGrupo[g]||coresGrupo[g.toLowerCase()],borderRadius:3}];
+  chartGrupo=new Chart(document.getElementById('cGrupo'),{type:'bar',data:{labels:semsReal,datasets:ds},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{stacked:g==='todos',ticks:{color:tc,font:{size:11}},grid:{color:gc}},y:{stacked:g==='todos',ticks:{color:tc,font:{size:11}},grid:{color:gc}}}}});
+}
+
+new Chart(document.getElementById('cMix'),{type:'doughnut',
+  data:{labels:['Cambuí','Barão','Valinhos','Caixote','Eventos','Ext.'],
+    datasets:[{data:[2469,1664,2522,680,750,757],backgroundColor:['#2C5F2D','#1B6CA8','#D4820A','#7B5EA7','#D85A30','#888'],borderWidth:0}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw.toLocaleString('pt-BR')} L (${Math.round(ctx.raw/8842*100)}%)`}}}}
+});
+
+const tGrupo=document.getElementById('tGrupo');
+const grpKeys=Object.keys(gruposData);
+let totSem=semsReal.map(()=>0);
+grpKeys.forEach(g=>{
+  const vals=gruposData[g];
+  const tot=vals.reduce((a,b)=>a+b,0);
+  vals.forEach((v,i)=>totSem[i]+=v);
+  tGrupo.innerHTML+=`<tr><td><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${coresGrupo[g]};margin-right:6px;vertical-align:middle;"></span>${g}</td>${vals.map(v=>`<td>${v>0?v.toLocaleString('pt-BR'):'—'}</td>`).join('')}<td><strong>${tot.toLocaleString('pt-BR')}</strong></td></tr>`;
+});
+tGrupo.innerHTML+=`<tr style="background:#FAFAF8;font-weight:600"><td>TOTAL</td>${totSem.map(v=>`<td>${v.toLocaleString('pt-BR')}</td>`).join('')}<td>${totSem.reduce((a,b)=>a+b,0).toLocaleString('pt-BR')}</td></tr>`;
+</script>
+</body>
+</html>
