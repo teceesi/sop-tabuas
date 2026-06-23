@@ -393,9 +393,37 @@ def render(m):
     return tpl
 
 
+DASH_URL = "https://teceesi.github.io/sop-tabuas/"
+
+def dump_model(m, path):
+    """Escreve model.json — a ponte que o alerts.py lê pra decidir/compor o email."""
+    ano = m["ano"]
+    grupos = {}
+    for g in GROUPS:
+        gd = m["groups"][g]
+        zerada = gd["stock"] <= 0
+        rompe_label = None
+        if not zerada and gd["first_neg"] is not None:
+            rompe_label = f"S{gd['first_neg']} ({fmt_data(data_da_semana(ano, gd['first_neg']))})"
+        if gd["next_env"]:
+            w, _ = gd["next_env"]
+            envase_label = f"S{w} ({fmt_data(data_da_semana(ano, w))})"
+        else:
+            envase_label = None
+        grupos[g] = dict(nome=NAMES[g], stock=gd["stock"], sev=gd["sev"],
+                         zerada=zerada, first_neg=gd["first_neg"],
+                         rompe_label=rompe_label, envase_label=envase_label)
+    out = dict(cur_week=m["cur_week"], ano=ano, total_stock=m["total_stock"],
+               gerado_em=datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
+               dash_url=DASH_URL, grupos=grupos)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(out, f, ensure_ascii=False, indent=1)
+
+
 import os
 TEMPLATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "template.html")
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+MODEL_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "model.json")
 
 if __name__ == "__main__":
     mock = "--mock" in sys.argv
@@ -404,6 +432,7 @@ if __name__ == "__main__":
     html = render(model)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"[ok] index.html gerado ({'MOCK' if mock else 'LIVE'}) — semana S{model['cur_week']}, "
+    dump_model(model, MODEL_JSON)
+    print(f"[ok] index.html + model.json gerados ({'MOCK' if mock else 'LIVE'}) — semana S{model['cur_week']}, "
           f"total {fmt_l(model['total_stock'])} L, "
           f"criticos: {[g for g in GROUPS if model['groups'][g]['sev']=='critico']}")
