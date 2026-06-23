@@ -25,11 +25,20 @@ jobs:
       - name: Gerar a dashboard (lê a planilha ao vivo)
         run: python generate.py
 
+      - name: Checar rupturas e avisar por email
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_RECIPIENTS: ${{ secrets.ALERT_RECIPIENTS }}
+        run: python alerts.py
+
       - name: Commitar se algo mudou
+        if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html
+          git add index.html model.json
+          git add alert_state.json || true
           if git diff --staged --quiet; then
             echo "Nada mudou hoje — sem commit."
           else
