@@ -126,9 +126,26 @@ def load_live():
     if cur: blocks.append(cur)
     if len(blocks) < 3:
         with open("debug_grid.json", "w") as f: json.dump(grid, f, ensure_ascii=False, indent=1)
-        raise RuntimeError(f"Esperava 3 blocos (estoque, real e/s, plan e/s), achei {len(blocks)}. "
+        raise RuntimeError(f"Esperava 3 blocos (estoque, planejado e/s, real e/s), achei {len(blocks)}. "
                            "Veja debug_grid.json e ajuste o parser.")
-    blk_stock, blk_real_es, blk_plan_es = blocks[0], blocks[1], blocks[2]
+    # 1o bloco = estoque. Os outros 2 (entrada/saida) sao classificados pelo ROTULO
+    # ("planejado" / "real") que fica logo acima deles — nao pela posicao.
+    blk_stock = blocks[0]
+    blk_plan_es = blk_real_es = None
+    for blk in blocks[1:]:
+        first_ri = blk[0][0]
+        rotulo = ""
+        for back in (2, 1, 3):  # o rotulo costuma ficar 2 linhas acima do 1o grupo
+            ri = first_ri - back
+            if ri >= 0 and grid[ri] and grid[ri][0]:
+                txt = str(grid[ri][0]).strip().lower()
+                if txt in ("planejado", "real"):
+                    rotulo = txt; break
+        if rotulo == "planejado": blk_plan_es = blk
+        elif rotulo == "real":    blk_real_es = blk
+    # fallback pela ordem da planilha (estoque, planejado, real) se algum rotulo faltar
+    if blk_plan_es is None: blk_plan_es = blocks[1]
+    if blk_real_es is None: blk_real_es = blocks[2]
 
     def header_weeks(block_first_ri):
         """Acha a linha de cabecalho (numeros de semana) logo acima do bloco e
