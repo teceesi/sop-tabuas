@@ -1,8 +1,8 @@
 {
  "estaca": {
-  "stock": 0,
+  "stock": 387,
   "first_neg": 27,
-  "zerada": true
+  "zerada": false
  },
  "outras": {
   "stock": 270,
