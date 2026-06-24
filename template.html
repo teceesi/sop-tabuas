@@ -71,18 +71,18 @@
 {{ALERTS}}
   </div>
 
-  <p class="sl">Risco de falta por grupo de cerveja — estoque real S{{CUR_WEEK}}</p>
+  <p class="sl">Risco de falta por grupo — posição planejada S{{CUR_WEEK}} (real da S{{PREV_WEEK}} + envase da semana − venda prevista)</p>
   <div class="risk-grid">
 {{RISK_CARDS}}
   </div>
 
-  <p class="sl">Visão geral — posição real S{{CUR_WEEK}} · {{CUR_DATE}}</p>
+  <p class="sl">Visão geral — posição planejada S{{CUR_WEEK}} · {{CUR_DATE}}</p>
   <div class="grid4" style="margin-bottom:24px;">
 {{MCARDS}}
   </div>
 
   <div class="panel">
-    <div class="panel-title"><div class="pi" style="background:#FCEEED;">📦</div>Projeção de estoque por grupo — {{PROJ_TITLE}} (reancorada no real S{{CUR_WEEK}})</div>
+    <div class="panel-title"><div class="pi" style="background:#FCEEED;">📦</div>Projeção de estoque por grupo — {{PROJ_TITLE}} (âncora: real da S{{PREV_WEEK}}; conta o envase da semana)</div>
     <div class="legend">
       <span><span class="ld" style="background:#2C5F2D;"></span>Trevo</span>
       <span><span class="ld" style="background:#1B6CA8;"></span>Estaca</span>
@@ -93,7 +93,7 @@
       <span><span class="ld" style="background:#888;"></span>Outras</span>
     </div>
     <div style="position:relative;width:100%;height:280px;"><canvas id="cEstGrupo"></canvas></div>
-    <div style="font-size:11px;color:#999;margin-top:8px;">Projeção parte do estoque real da semana corrente e aplica entradas (envases) e saídas planejadas. Valores negativos = ruptura projetada se nada for feito.</div>
+    <div style="font-size:11px;color:#999;margin-top:8px;">Projeção parte do real da semana anterior (a sobra), soma o envase planejado de cada semana e tira a venda prevista. Valores negativos = ruptura projetada se nada for feito.</div>
   </div>
 
   <div class="panel">
@@ -136,10 +136,10 @@
   <div class="divider"></div>
 
   <div class="panel">
-    <div class="panel-title"><div class="pi" style="background:#FCEEED;">🚨</div>Tabela de risco por grupo — estoque real S{{CUR_WEEK}} + projeção S{{NEXT_WEEK}}</div>
+    <div class="panel-title"><div class="pi" style="background:#FCEEED;">🚨</div>Tabela de risco por grupo — projeção a partir da S{{CUR_WEEK}}</div>
     <div style="overflow-x:auto;">
       <table class="ftable">
-        <thead><tr><th>Grupo</th><th>Estoque real S{{CUR_WEEK}} (L)</th><th>Entrada S{{NEXT_WEEK}} (L)</th><th>Saída plan. S{{NEXT_WEEK}} (L)</th><th>Saldo pós-S{{NEXT_WEEK}} (L)</th><th>Próx. envase</th><th>Risco</th></tr></thead>
+        <thead><tr><th>Grupo</th><th>Posição plan. S{{CUR_WEEK}} (L)</th><th>Entrada S{{CUR_WEEK}} (L)</th><th>Saída plan. S{{CUR_WEEK}} (L)</th><th>Saldo S{{CUR_WEEK}} (L)</th><th>Próx. envase</th><th>Risco</th></tr></thead>
         <tbody>
 {{RISK_TABLE_ROWS}}
         </tbody>

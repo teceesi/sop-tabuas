@@ -55,8 +55,9 @@ def fmt_l(n):
 #   plan_sai_total : {semana: litros}        saida planejada total (p/ grafico real x plan)
 
 def load_mock():
-    cur = 25
-    real_stock = {"trevo":855,"capim":1719,"estaca":0,"NEIPA":458,"escura":30,"sour":344,"outras":270}
+    cur = 26
+    # ancora = real da semana ANTERIOR (S25), valor de fim de semana
+    real_stock = {"trevo":659,"capim":1627,"estaca":408,"NEIPA":383,"escura":30,"sour":341,"outras":270}
     # pares (entrada, saida) planejados por semana a partir da S18
     PLAN_PAIRS = {
      "trevo":[0,493,600,509,600,509,800,509,600,509,600,488,0,488,570,988,570,488,570,501,570,507,570,507,570,507,570,521,570,555,570,555,570,555,570,555,570,618,570,629,570,629,570,629,570,651,570,668,570,668,570,668,570,579,570,48,570,48],
@@ -171,11 +172,15 @@ def load_live():
         return out
 
     cur_week = semana_atual()
-    # --- estoque real na semana corrente (2a coluna do par = 'real') ---
+    # ANCORA no real da ULTIMA semana fechada (cur-1): esse valor e o de FIM de semana,
+    # ja consolidado. O real da semana corrente ainda esta incompleto (o envase da semana
+    # so cai no real quando e efetivamente feito). Projetamos a partir da semana corrente,
+    # somando o envase desta semana — assim nao acusamos quebra antes da hora.
+    anchor_week = cur_week - 1
     cols_stock = pair_cols(header_weeks(blk_stock[0][0]))
     real_stock = {}
     for _, g, row in blk_stock:
-        c = cols_stock.get(cur_week)
+        c = cols_stock.get(anchor_week) or cols_stock.get(cur_week)
         real_stock[g] = round(_num(row[c[1]]) or 0)
     # --- plan entrada/saida (1o=entrada, 2o=saida) ---
     cols_pes = pair_cols(header_weeks(blk_plan_es[0][0]))
@@ -201,7 +206,9 @@ def load_live():
 # ========================== CALCULO ==========================
 def build_model(raw):
     cur = raw["cur_week"]; ano = hoje().year
-    proj_weeks = list(range(cur+1, cur+1+HORIZON))
+    # projeta A PARTIR da semana corrente (inclui o envase desta semana). A ancora
+    # (raw['real_stock']) e o real da semana anterior = sobra com que comecamos a semana.
+    proj_weeks = list(range(cur, cur + HORIZON))
     m = {"cur_week": cur, "ano": ano, "proj_weeks": proj_weeks, "groups": {}}
     for g in GROUPS:
         s = raw["real_stock"].get(g, 0); proj = []
@@ -209,23 +216,21 @@ def build_model(raw):
             s = s + raw["plan_ent"][g].get(w, 0) - raw["plan_sai"][g].get(w, 0)
             proj.append(round(s))
         first_neg = next((proj_weeks[i] for i, v in enumerate(proj) if v < 0), None)
-        # proximo envase = 1a semana futura com entrada planejada > 0
+        # proximo envase = 1a semana (>= corrente) com entrada planejada > 0
         nxt = next(((w, raw["plan_ent"][g][w]) for w in proj_weeks if raw["plan_ent"][g].get(w, 0) > 0), None)
-        cur_stock = raw["real_stock"].get(g, 0)
-        if cur_stock <= 0:
-            sev = "critico"
-        elif first_neg is not None and first_neg <= cur + 2:
+        pos_atual = proj[0]   # posicao planejada da semana corrente (ancora + entra - sai da semana)
+        if first_neg is not None and first_neg <= cur + 1:   # rompe esta semana ou na proxima
             sev = "critico"
         elif first_neg is not None:
             sev = "atencao"
         else:
             sev = "ok"
-        m["groups"][g] = dict(stock=cur_stock, proj=proj, first_neg=first_neg, sev=sev,
+        m["groups"][g] = dict(stock=pos_atual, proj=proj, first_neg=first_neg, sev=sev,
                               next_env=nxt,
-                              ent_next=raw["plan_ent"][g].get(cur+1, 0),
-                              sai_next=raw["plan_sai"][g].get(cur+1, 0),
+                              ent_next=raw["plan_ent"][g].get(cur, 0),
+                              sai_next=raw["plan_sai"][g].get(cur, 0),
                               saldo_next=proj[0])
-    m["total_stock"] = sum(raw["real_stock"].get(g, 0) for g in GROUPS)
+    m["total_stock"] = sum(m["groups"][g]["stock"] for g in GROUPS)
     # saidas realizadas
     weeks_real = sorted({w for g in GROUPS for w in raw["real_sai"].get(g, {})})
     weeks_real = [w for w in weeks_real if w <= cur]
@@ -264,7 +269,7 @@ def render(m):
     oks  = [g for g in GROUPS if m["groups"][g]["sev"] == "ok"]
 
     # ---- subtitle + badge ----
-    sub = f"Saídas realizadas S18–S{cur} · Previsão S{nxt}–S{end} · Estoque real atualizado S{cur} ({cur_date})"
+    sub = f"Saídas realizadas S18–S{cur} · Projeção S{cur}–S{end} · Âncora: real da S{cur-1} ({cur_date})"
     if crit:
         badge = f'<span class="badge b-danger">⚠ Ação imediata — {", ".join(NAMES[g] for g in crit)}</span>'
     elif aten:
@@ -326,9 +331,9 @@ def render(m):
     crit_names = " · ".join(NAMES[g] for g in crit) if crit else "nenhum"
     mcards = f'''    <div class="mcard">
       <div class="mcard-top" style="background:#2C5F2D;"></div>
-      <div class="lbl">Estoque total atual</div>
+      <div class="lbl">Posição planejada total</div>
       <div class="val" style="color:#2C5F2D">{fmt_l(m["total_stock"])} L</div>
-      <div class="sub">Chope · posição real S{cur}</div>
+      <div class="sub">Chope · projeção S{cur}</div>
     </div>
     <div class="mcard">
       <div class="mcard-top" style="background:#1B6CA8;"></div>
@@ -392,8 +397,8 @@ def render(m):
     repl = {
         "{{SUBTITLE}}": sub, "{{BADGE}}": badge, "{{ALERTS}}": "\n".join(alerts),
         "{{RISK_CARDS}}": "\n".join(cards), "{{MCARDS}}": mcards,
-        "{{CUR_WEEK}}": str(cur), "{{NEXT_WEEK}}": str(nxt), "{{CUR_DATE}}": cur_date,
-        "{{PROJ_TITLE}}": f"S{nxt} a S{end}", "{{RISK_TABLE_ROWS}}": "\n".join(rows),
+        "{{CUR_WEEK}}": str(cur), "{{NEXT_WEEK}}": str(nxt), "{{PREV_WEEK}}": str(cur-1), "{{CUR_DATE}}": cur_date,
+        "{{PROJ_TITLE}}": f"S{cur} a S{end}", "{{RISK_TABLE_ROWS}}": "\n".join(rows),
         "{{REAL_TABLE_HEAD}}": real_head, "{{DECISIONS}}": "\n".join(dec),
         "{{GENERATED_AT}}": datetime.datetime.now().strftime("%d/%m/%Y %H:%M") + " (S"+str(cur)+")",
         "{{SEMS_REAL}}": json.dumps([f"S{w}" for w in m["weeks_real"]]),
