@@ -2,9 +2,11 @@ name: Atualiza dashboard S&OP
 
 on:
   schedule:
-    # 14:00 UTC = 11:00 no horário de Brasília (UTC-3).
-    # Pra mudar o horário, troque só a hora abaixo (sempre em UTC: BRT + 3).
-    - cron: '0 14 * * *'
+    # 14:17 UTC = 11:17 no horário de Brasília (UTC-3).
+    # Minuto "quebrado" de propósito: agendamentos no horário cheio (x:00) caem numa
+    # fila concorrida no GitHub e às vezes atrasam ou são pulados.
+    # Pra mudar: troque hora/minuto abaixo (sempre em UTC: BRT + 3 na hora).
+    - cron: '17 14 * * *'
   workflow_dispatch:   # botão "Run workflow" na aba Actions, pra rodar quando quiser
 
 permissions:
