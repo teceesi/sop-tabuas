@@ -1,11 +1,6 @@
 {
- "estaca": {
-  "stock": 27,
-  "first_neg": 27,
-  "zerada": false
- },
- "outras": {
-  "stock": 220,
+ "NEIPA": {
+  "stock": 152,
   "first_neg": 27,
   "zerada": false
  }
