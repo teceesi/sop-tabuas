@@ -60,9 +60,9 @@
 <div class="topbar">
   <div>
     <div class="title">S&OP — Cervejaria Tabuas</div>
-    <div class="sub">Saídas realizadas S18–S29 · Projeção S29–S48 · Âncora: real da S28 (15/jul)</div>
+    <div class="sub">Saídas realizadas S18–S29 · Projeção S29–S48 · Âncora: real da S28 (16/jul)</div>
   </div>
-  <span class="badge b-warn">⚠ Atenção — Capim, Estaca</span>
+  <span class="badge b-warn">⚠ Atenção — Estaca, Escura, Outras</span>
 </div>
 
 <div class="container">
@@ -70,27 +70,33 @@
   <div style="margin-bottom:20px;">
     <div class="alert alert-warn">
       <span style="font-size:18px;flex-shrink:0">⚠️</span>
-      <span><strong>Atenção (vãos / 2º semestre):</strong> Capim (S35) · Estaca (S32). Conferir timing dos envases e planejar envases extras.</span>
+      <span><strong>Atenção (vãos / 2º semestre):</strong> Estaca (S32) · Escura (S40) · Outras (S44). Conferir timing dos envases e planejar envases extras.</span>
     </div>
     <div class="alert alert-ok">
       <span style="font-size:18px;flex-shrink:0">✅</span>
-      <span><strong>Sem risco:</strong> Trevo, NEIPA, Escura, Sour, Outras. Estoque real total de chope na S29: <strong>4.942 L</strong>.</span>
+      <span><strong>Sem risco:</strong> Trevo, Capim, NEIPA, Sour. Estoque real total de chope na S29: <strong>4.942 L</strong>.</span>
     </div>
   </div>
 
   <p class="sl">Risco de falta por grupo — posição planejada S29 (real da S28 + envase da semana − venda prevista)</p>
   <div class="risk-grid">
     <div class="rcard atencao">
-      <div class="rg">⚠️ Capim</div>
-      <div class="re">589 L</div>
-      <div class="rs">Próx. envase S30 · 20/jul · 1.000 L</div>
-      <div class="rw" style="color:#854F0B">Risco S35 · 24/ago</div>
-    </div>
-    <div class="rcard atencao">
       <div class="rg">⚠️ Estaca</div>
       <div class="re">791 L</div>
       <div class="rs">Próx. envase S29 · 13/jul · 930 L</div>
       <div class="rw" style="color:#854F0B">Risco S32 · 03/ago</div>
+    </div>
+    <div class="rcard atencao">
+      <div class="rg">⚠️ Escura</div>
+      <div class="re">597 L</div>
+      <div class="rs">Próx. envase S37 · 07/set · 200 L</div>
+      <div class="rw" style="color:#854F0B">Risco S40 · 28/set</div>
+    </div>
+    <div class="rcard atencao">
+      <div class="rg">⚠️ Outras</div>
+      <div class="re">821 L</div>
+      <div class="rs">Próx. envase S29 · 13/jul · 780 L</div>
+      <div class="rw" style="color:#854F0B">Risco S44 · 26/out</div>
     </div>
     <div class="rcard ok">
       <div class="rg">✅ Trevo</div>
@@ -99,32 +105,26 @@
       <div class="rw" style="color:#3B6D11">OK até S48 · cobertura folgada</div>
     </div>
     <div class="rcard ok">
+      <div class="rg">✅ Capim</div>
+      <div class="re">589 L</div>
+      <div class="rs">Envases garantidos · próx. S30 · 20/jul · 1.000 L</div>
+      <div class="rw" style="color:#3B6D11">OK até S48 · cobertura folgada</div>
+    </div>
+    <div class="rcard ok">
       <div class="rg">✅ NEIPA</div>
       <div class="re">629 L</div>
       <div class="rs">Envases garantidos · próx. S29 · 13/jul · 738 L</div>
       <div class="rw" style="color:#3B6D11">OK até S48 · cobertura folgada</div>
     </div>
-    <div class="rcard ok">
-      <div class="rg">✅ Escura</div>
-      <div class="re">597 L</div>
-      <div class="rs">Envases garantidos · próx. S37 · 07/set · 200 L</div>
-      <div class="rw" style="color:#3B6D11">OK até S48 · cobertura folgada</div>
-    </div>
-    <div class="rcard ok">
+    <div class="rcard ok" style="grid-column:span 2">
       <div class="rg">✅ Sour</div>
       <div class="re">1.034 L</div>
       <div class="rs">Envases garantidos · próx. S29 · 13/jul · 950 L</div>
       <div class="rw" style="color:#3B6D11">OK até S48 · cobertura folgada</div>
     </div>
-    <div class="rcard ok" style="grid-column:span 2">
-      <div class="rg">✅ Outras</div>
-      <div class="re">821 L</div>
-      <div class="rs">Envases garantidos · próx. S29 · 13/jul · 780 L</div>
-      <div class="rw" style="color:#3B6D11">OK até S48 · cobertura folgada</div>
-    </div>
   </div>
 
-  <p class="sl">Visão geral — posição planejada S29 · 15/jul</p>
+  <p class="sl">Visão geral — posição planejada S29 · 16/jul</p>
   <div class="grid4" style="margin-bottom:24px;">
     <div class="mcard">
       <div class="mcard-top" style="background:#2C5F2D;"></div>
@@ -213,21 +213,33 @@
         <thead><tr><th>Grupo</th><th>Posição plan. S29 (L)</th><th>Entrada S29 (L)</th><th>Saída plan. S29 (L)</th><th>Saldo S29 (L)</th><th>Próx. envase</th><th>Risco</th></tr></thead>
         <tbody>
           <tr style="background:#FEF3CD">
-            <td><strong>Capim</strong></td><td>589</td><td>—</td><td>250</td>
-            <td>589</td>
-            <td>S30 · 20/jul · 1.000 L</td>
-            <td><span class="badge b-warn">Risco S35</span></td>
-          </tr>
-          <tr style="background:#FEF3CD">
             <td><strong>Estaca</strong></td><td>791</td><td>930</td><td>362</td>
             <td>791</td>
             <td>S29 · 13/jul · 930 L</td>
             <td><span class="badge b-warn">Risco S32</span></td>
           </tr>
+          <tr style="background:#FEF3CD">
+            <td><strong>Escura</strong></td><td>597</td><td>—</td><td>62</td>
+            <td>597</td>
+            <td>S37 · 07/set · 200 L</td>
+            <td><span class="badge b-warn">Risco S40</span></td>
+          </tr>
+          <tr style="background:#FEF3CD">
+            <td><strong>Outras</strong></td><td>821</td><td>780</td><td>209</td>
+            <td>821</td>
+            <td>S29 · 13/jul · 780 L</td>
+            <td><span class="badge b-warn">Risco S44</span></td>
+          </tr>
           <tr>
             <td><strong>Trevo</strong></td><td>481</td><td>—</td><td>438</td>
             <td>481</td>
             <td>S31 · 27/jul · 570 L</td>
+            <td><span class="badge b-ok">OK até S48</span></td>
+          </tr>
+          <tr>
+            <td><strong>Capim</strong></td><td>589</td><td>—</td><td>250</td>
+            <td>589</td>
+            <td>S30 · 20/jul · 1.000 L</td>
             <td><span class="badge b-ok">OK até S48</span></td>
           </tr>
           <tr>
@@ -237,21 +249,9 @@
             <td><span class="badge b-ok">OK até S48</span></td>
           </tr>
           <tr>
-            <td><strong>Escura</strong></td><td>597</td><td>—</td><td>62</td>
-            <td>597</td>
-            <td>S37 · 07/set · 200 L</td>
-            <td><span class="badge b-ok">OK até S48</span></td>
-          </tr>
-          <tr>
             <td><strong>Sour</strong></td><td>1.034</td><td>950</td><td>106</td>
             <td>1.034</td>
             <td>S29 · 13/jul · 950 L</td>
-            <td><span class="badge b-ok">OK até S48</span></td>
-          </tr>
-          <tr>
-            <td><strong>Outras</strong></td><td>821</td><td>780</td><td>209</td>
-            <td>821</td>
-            <td>S29 · 13/jul · 780 L</td>
             <td><span class="badge b-ok">OK até S48</span></td>
           </tr>
         </tbody>
@@ -274,7 +274,7 @@
     <div style="display:flex;flex-direction:column;gap:10px;">
       <div style="background:#2C5F2D;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:center;">
         <span style="background:#D4820A;color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;white-space:nowrap;">D1</span>
-        <span style="color:#C8E6C9;font-size:13px;">Capim, Estaca: planejar envases adicionais / conferir timing (riscos a partir de S32)</span>
+        <span style="color:#C8E6C9;font-size:13px;">Estaca, Escura, Outras: planejar envases adicionais / conferir timing (riscos a partir de S32)</span>
       </div>
       <div style="background:#2C5F2D;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:center;">
         <span style="background:#7B5EA7;color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;white-space:nowrap;">D2</span>
@@ -284,7 +284,7 @@
   </div>
 
 </div>
-<footer>Cervejaria Tabuas · S&OP · Atualizado automaticamente em 15/07/2026 15:53 (S29) · Elaborado por Talita</footer>
+<footer>Cervejaria Tabuas · S&OP · Atualizado automaticamente em 16/07/2026 15:49 (S29) · Elaborado por Talita</footer>
 
 <script>
 const gc='rgba(0,0,0,0.06)',tc='#888';
@@ -293,7 +293,7 @@ const gruposData={"trevo": [0, 507, 390, 500, 296, 557, 212, 601, 347, 200, 399,
 const coresGrupo={trevo:'#2C5F2D',estaca:'#1B6CA8',capim:'#D4820A',NEIPA:'#7B5EA7',sour:'#D85A30',escura:'#6B4C3B',outras:'#888'};
 
 const semsProj=[29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48];
-const estProj={"trevo": [481, 43, 172, 239, 306, 373, 440, 431, 410, 389, 368, 345, 320, 295, 270, 252, 275, 298, 321, 344], "capim": [589, 1339, 1087, 803, 519, 235, -49, 623, 288, -47, 618, 282, -54, 610, 274, -58, 631, 320, 9, 698], "estaca": [791, 429, 64, -340, 176, 1192, 788, 2039, 1559, 1079, 599, 122, 567, 92, 537, 66, 542, 98, 574, 130], "NEIPA": [629, 430, 579, 361, 843, 625, 407, 850, 587, 1324, 1061, 799, 1238, 977, 716, 1457, 1910, 1663, 1416, 1169], "escura": [597, 535, 473, 403, 333, 263, 193, 113, 232, 151, 70, 488, 405, 322, 279, 197, 120, 543, 466, 549], "sour": [1034, 928, 821, 703, 585, 467, 1349, 1212, 1072, 932, 792, 652, 512, 372, 1232, 1093, 961, 829, 1697, 1565], "outras": [821, 612, 401, 922, 1693, 1464, 1235, 966, 1191, 916, 641, 366, 1012, 738, 964, 852, 594, 1036, 778, 520]};
+const estProj={"trevo": [481, 43, 172, 239, 306, 373, 440, 431, 410, 389, 368, 345, 320, 295, 270, 252, 275, 298, 321, 344], "capim": [589, 1339, 1087, 803, 1519, 1235, 951, 623, 288, 953, 1618, 1282, 946, 1610, 1274, 942, 1631, 1320, 1009, 1698], "estaca": [791, 429, 64, -340, 176, 1192, 788, 2039, 1559, 1079, 599, 122, 567, 92, 537, 66, 542, 98, 574, 130], "NEIPA": [629, 430, 579, 361, 843, 625, 407, 850, 587, 324, 761, 499, 938, 677, 416, 1157, 1610, 1363, 1116, 869], "escura": [597, 535, 473, 403, 333, 263, 193, 113, 232, 151, 70, -12, -95, -178, 279, 197, 120, 543, 466, 549], "sour": [1034, 928, 821, 703, 585, 467, 349, 1212, 1072, 932, 792, 652, 512, 372, 1232, 1093, 961, 829, 1697, 1565], "outras": [821, 612, 401, 922, 693, 464, 1235, 966, 1191, 916, 641, 866, 592, 318, 44, -68, -326, 116, -142, -400]};
 
 new Chart(document.getElementById('cEstGrupo'),{
   type:'line',
