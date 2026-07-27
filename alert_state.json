@@ -1,7 +1,12 @@
 {
+ "capim": {
+  "stock": 180,
+  "first_neg": 32,
+  "zerada": false
+ },
  "estaca": {
-  "stock": 238,
-  "first_neg": 31,
+  "stock": 105,
+  "first_neg": 32,
   "zerada": false
  }
 }
