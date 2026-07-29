@@ -417,9 +417,15 @@ def render(m):
     pos_rows, ent_rows, sai_rows = [], [], []
     for g in ordered:
         gd = m["groups"][g]
-        pos_cells = "".join(
-            f'<td style="color:#A32D2D;font-weight:600">{fmt_l(v)}</td>' if v < 0 else f"<td>{fmt_l(v)}</td>"
-            for v in gd["pos_window"])
+        pos_cells = ""
+        for v in gd["pos_window"]:
+            if v < 0:
+                bg, col = "#FCEEED", "#A32D2D"
+            elif v < 300:
+                bg, col = "#FEF3CD", "#854F0B"
+            else:
+                bg, col = "#EAF3DE", "#3B6D11"
+            pos_cells += f'<td style="background:{bg};color:{col};font-weight:600;text-align:center">{fmt_l(v)}</td>'
         pos_rows.append(f'<tr><td><strong>{NAMES[g]}</strong></td>{pos_cells}</tr>')
         ent_cells = "".join(f"<td>{fmt_l(v)}</td>" if v else "<td>—</td>" for v in gd["ent_window"])
         ent_rows.append(f'<tr><td><strong>{NAMES[g]}</strong></td>{ent_cells}</tr>')
@@ -457,6 +463,8 @@ def render(m):
         "{{POSICAO_TABLE_ROWS}}": "\n".join(pos_rows),
         "{{ENTRADA_TABLE_ROWS}}": "\n".join(ent_rows),
         "{{SAIDA_TABLE_ROWS}}": "\n".join(sai_rows),
+        "{{WINDOW_WEEKS}}": json.dumps(m["window_weeks"]),
+        "{{POS_WINDOW}}": json.dumps({g: m["groups"][g]["pos_window"] for g in GROUPS}),
         "{{GENERATED_AT}}": datetime.datetime.now().strftime("%d/%m/%Y %H:%M") + " (S"+str(cur)+")",
         "{{SEMS_REAL}}": json.dumps([f"S{w}" for w in m["weeks_real"]]),
         "{{GRUPOS_DATA}}": json.dumps(m["gruposData"]),

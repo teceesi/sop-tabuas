@@ -148,6 +148,14 @@
   </div>
 
   <div class="panel">
+    <div class="panel-title"><div class="pi" style="background:#FCEEED;">🚨</div>Cobertura de estoque — apenas grupos em risco (S{{CUR_WEEK}} + próximas 8)</div>
+    <div id="riscoLegend" class="legend"></div>
+    <div style="position:relative;width:100%;height:240px;"><canvas id="cRiscoCobertura"></canvas></div>
+    <div id="riscoVazio" style="display:none;font-size:13px;color:#3B6D11;padding:10px 0;">✅ Nenhum grupo com ruptura projetada nas próximas 8 semanas.</div>
+    <div style="font-size:11px;color:#999;margin-top:8px;">Só entram no gráfico grupos cuja posição (planejada, direto da planilha) cruza zero em algum ponto da janela. Linha tracejada = zero (ruptura).</div>
+  </div>
+
+  <div class="panel">
     <div class="panel-title"><div class="pi" style="background:#E6F1FB;">🗓️</div>Posição de estoque — S{{CUR_WEEK}} (real) + próximas 8 (planejado, direto da planilha)</div>
     <div style="overflow-x:auto;">
       <table class="ftable">
@@ -230,6 +238,38 @@ new Chart(document.getElementById('cEstGrupo'),{
 });
 
 const allSems={{ALL_SEMS}};
+
+const windowWeeks={{WINDOW_WEEKS}};
+const posWindow={{POS_WINDOW}};
+const nomesGrupoRisco={trevo:'Trevo',capim:'Capim',estaca:'Estaca',NEIPA:'NEIPA',escura:'Escura',sour:'Sour',outras:'Outras'};
+const gruposEmRisco=Object.keys(posWindow).filter(g=>Math.min(...posWindow[g])<0);
+const riscoLegendEl=document.getElementById('riscoLegend');
+if(gruposEmRisco.length===0){
+  document.getElementById('riscoVazio').style.display='block';
+  document.getElementById('cRiscoCobertura').style.display='none';
+}else{
+  gruposEmRisco.forEach(g=>{
+    riscoLegendEl.innerHTML+=`<span><span class="ld" style="background:${coresGrupo[g]};"></span>${nomesGrupoRisco[g]||g}</span>`;
+  });
+  riscoLegendEl.innerHTML+=`<span><span class="ld" style="background:#999;"></span>Zero (ruptura)</span>`;
+  new Chart(document.getElementById('cRiscoCobertura'),{
+    type:'line',
+    data:{labels:windowWeeks.map(s=>'S'+s),
+      datasets:[
+        ...gruposEmRisco.map(g=>({label:nomesGrupoRisco[g]||g,data:posWindow[g],borderColor:coresGrupo[g],backgroundColor:'transparent',tension:0.25,pointRadius:3,borderWidth:2,fill:false})),
+        {label:'Zero (ruptura)',data:windowWeeks.map(()=>0),borderColor:'#A32D2D',borderDash:[6,4],pointRadius:0,borderWidth:1.5}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw.toLocaleString('pt-BR')} L`}}},
+      scales:{
+        x:{ticks:{color:tc,font:{size:11}},grid:{color:gc}},
+        y:{ticks:{color:tc,font:{size:11}},grid:{color:gc},title:{display:true,text:'Litros',color:tc,font:{size:11}}}
+      }
+    }
+  });
+}
+
 const saidaReal={{SAIDA_REAL}};
 const saidaPlan={{SAIDA_PLAN}};
 new Chart(document.getElementById('cRealVsPlan'),{
