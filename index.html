@@ -256,18 +256,26 @@
   </div>
 
   <div class="panel">
+    <div class="panel-title"><div class="pi" style="background:#FCEEED;">🚨</div>Cobertura de estoque — apenas grupos em risco (S31 + próximas 8)</div>
+    <div id="riscoLegend" class="legend"></div>
+    <div style="position:relative;width:100%;height:240px;"><canvas id="cRiscoCobertura"></canvas></div>
+    <div id="riscoVazio" style="display:none;font-size:13px;color:#3B6D11;padding:10px 0;">✅ Nenhum grupo com ruptura projetada nas próximas 8 semanas.</div>
+    <div style="font-size:11px;color:#999;margin-top:8px;">Só entram no gráfico grupos cuja posição (planejada, direto da planilha) cruza zero em algum ponto da janela. Linha tracejada = zero (ruptura).</div>
+  </div>
+
+  <div class="panel">
     <div class="panel-title"><div class="pi" style="background:#E6F1FB;">🗓️</div>Posição de estoque — S31 (real) + próximas 8 (planejado, direto da planilha)</div>
     <div style="overflow-x:auto;">
       <table class="ftable">
         <thead><tr><th>Grupo</th><th>S31 (atual)</th><th>S32</th><th>S33</th><th>S34</th><th>S35</th><th>S36</th><th>S37</th><th>S38</th><th>S39</th></tr></thead>
         <tbody>
-<tr><td><strong>Trevo</strong></td><td>689</td><td>495</td><td>562</td><td>628</td><td>695</td><td>686</td><td>665</td><td>643</td><td>622</td></tr>
-<tr><td><strong>Capim</strong></td><td>1.335</td><td>879</td><td>1.595</td><td>1.311</td><td>1.027</td><td>699</td><td>364</td><td>1.028</td><td>693</td></tr>
-<tr><td><strong>Estaca</strong></td><td>40</td><td>0</td><td>516</td><td>1.531</td><td>1.127</td><td>2.378</td><td>1.898</td><td>1.419</td><td>939</td></tr>
-<tr><td><strong>NEIPA</strong></td><td>330</td><td>571</td><td>1.053</td><td>836</td><td>618</td><td>1.061</td><td>798</td><td>534</td><td>971</td></tr>
-<tr><td><strong>Escura</strong></td><td>530</td><td>497</td><td>427</td><td>357</td><td>287</td><td>207</td><td>126</td><td>244</td><td>163</td></tr>
-<tr><td><strong>Sour</strong></td><td>820</td><td>645</td><td>528</td><td>410</td><td>292</td><td>1.155</td><td>1.015</td><td>875</td><td>735</td></tr>
-<tr><td><strong>Outras</strong></td><td>630</td><td>240</td><td>760</td><td>531</td><td>301</td><td>33</td><td>257</td><td>0</td><td>725</td></tr>
+<tr><td><strong>Trevo</strong></td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">689</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">495</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">562</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">628</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">695</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">686</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">665</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">643</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">622</td></tr>
+<tr><td><strong>Capim</strong></td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.335</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">879</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.595</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.311</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.027</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">699</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">364</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.028</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">693</td></tr>
+<tr><td><strong>Estaca</strong></td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">40</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">0</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">516</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.531</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.127</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">2.378</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.898</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.419</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">939</td></tr>
+<tr><td><strong>NEIPA</strong></td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">330</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">571</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.053</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">836</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">618</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.061</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">798</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">534</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">971</td></tr>
+<tr><td><strong>Escura</strong></td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">530</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">497</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">427</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">357</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">287</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">207</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">126</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">244</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">163</td></tr>
+<tr><td><strong>Sour</strong></td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">820</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">645</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">528</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">410</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">292</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.155</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">1.015</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">875</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">735</td></tr>
+<tr><td><strong>Outras</strong></td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">630</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">240</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">760</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">531</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">301</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">33</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">257</td><td style="background:#FEF3CD;color:#854F0B;font-weight:600;text-align:center">0</td><td style="background:#EAF3DE;color:#3B6D11;font-weight:600;text-align:center">725</td></tr>
         </tbody>
       </table>
     </div>
@@ -331,7 +339,7 @@
   </div>
 
 </div>
-<footer>Cervejaria Tabuas · S&OP · Atualizado automaticamente em 29/07/2026 15:19 (S31) · Elaborado por Talita</footer>
+<footer>Cervejaria Tabuas · S&OP · Atualizado automaticamente em 29/07/2026 15:38 (S31) · Elaborado por Talita</footer>
 
 <script>
 const gc='rgba(0,0,0,0.06)',tc='#888';
@@ -359,6 +367,38 @@ new Chart(document.getElementById('cEstGrupo'),{
 });
 
 const allSems=[18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41];
+
+const windowWeeks=[31, 32, 33, 34, 35, 36, 37, 38, 39];
+const posWindow={"trevo": [689, 495, 562, 628, 695, 686, 665, 643, 622], "capim": [1335, 879, 1595, 1311, 1027, 699, 364, 1028, 693], "estaca": [40, 0, 516, 1531, 1127, 2378, 1898, 1419, 939], "NEIPA": [330, 571, 1053, 836, 618, 1061, 798, 534, 971], "escura": [530, 497, 427, 357, 287, 207, 126, 244, 163], "sour": [820, 645, 528, 410, 292, 1155, 1015, 875, 735], "outras": [630, 240, 760, 531, 301, 33, 257, 0, 725]};
+const nomesGrupoRisco={trevo:'Trevo',capim:'Capim',estaca:'Estaca',NEIPA:'NEIPA',escura:'Escura',sour:'Sour',outras:'Outras'};
+const gruposEmRisco=Object.keys(posWindow).filter(g=>Math.min(...posWindow[g])<0);
+const riscoLegendEl=document.getElementById('riscoLegend');
+if(gruposEmRisco.length===0){
+  document.getElementById('riscoVazio').style.display='block';
+  document.getElementById('cRiscoCobertura').style.display='none';
+}else{
+  gruposEmRisco.forEach(g=>{
+    riscoLegendEl.innerHTML+=`<span><span class="ld" style="background:${coresGrupo[g]};"></span>${nomesGrupoRisco[g]||g}</span>`;
+  });
+  riscoLegendEl.innerHTML+=`<span><span class="ld" style="background:#999;"></span>Zero (ruptura)</span>`;
+  new Chart(document.getElementById('cRiscoCobertura'),{
+    type:'line',
+    data:{labels:windowWeeks.map(s=>'S'+s),
+      datasets:[
+        ...gruposEmRisco.map(g=>({label:nomesGrupoRisco[g]||g,data:posWindow[g],borderColor:coresGrupo[g],backgroundColor:'transparent',tension:0.25,pointRadius:3,borderWidth:2,fill:false})),
+        {label:'Zero (ruptura)',data:windowWeeks.map(()=>0),borderColor:'#A32D2D',borderDash:[6,4],pointRadius:0,borderWidth:1.5}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw.toLocaleString('pt-BR')} L`}}},
+      scales:{
+        x:{ticks:{color:tc,font:{size:11}},grid:{color:gc}},
+        y:{ticks:{color:tc,font:{size:11}},grid:{color:gc},title:{display:true,text:'Litros',color:tc,font:{size:11}}}
+      }
+    }
+  });
+}
+
 const saidaReal=[39, 1604, 1325, 2227, 1150, 1979, 1437, 1943, 1565, 1319, 1663, 1748, 1493, 690, null, null, null, null, null, null, null, null, null, null];
 const saidaPlan=[1795, 1812, 1812, 1812, 1812, 1673, 1673, 2610, 1684, 1616, 2076, 1626, 1626, 1639, 1826, 1826, 1826, 1826, 2119, 2165, 2165, 2165, 2165, 2164];
 new Chart(document.getElementById('cRealVsPlan'),{
