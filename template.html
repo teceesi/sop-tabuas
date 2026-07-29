@@ -148,6 +148,43 @@
   </div>
 
   <div class="panel">
+    <div class="panel-title"><div class="pi" style="background:#E6F1FB;">🗓️</div>Posição de estoque — S{{CUR_WEEK}} (real) + próximas 8 (planejado, direto da planilha)</div>
+    <div style="overflow-x:auto;">
+      <table class="ftable">
+        <thead><tr>{{WIN_TABLE_HEAD}}</tr></thead>
+        <tbody>
+{{POSICAO_TABLE_ROWS}}
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:11px;color:#999;margin-top:8px;">Semana atual = coluna "real" da planilha. Semanas seguintes = coluna "planejado" da planilha (já com fórmula própria que impede estoque negativo).</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title"><div class="pi" style="background:#EAF3DE;">📥</div>Entrada planejada — S{{CUR_WEEK}} + próximas 8</div>
+    <div style="overflow-x:auto;">
+      <table class="ftable">
+        <thead><tr>{{WIN_TABLE_HEAD}}</tr></thead>
+        <tbody>
+{{ENTRADA_TABLE_ROWS}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title"><div class="pi" style="background:#FEF3CD;">📤</div>Saída planejada — S{{CUR_WEEK}} + próximas 8</div>
+    <div style="overflow-x:auto;">
+      <table class="ftable">
+        <thead><tr>{{WIN_TABLE_HEAD}}</tr></thead>
+        <tbody>
+{{SAIDA_TABLE_ROWS}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
     <div class="panel-title"><div class="pi" style="background:#E6F1FB;">📊</div>Saídas realizadas por grupo — S18 a S{{CUR_WEEK}}</div>
     <div style="overflow-x:auto;">
       <table class="ftable">

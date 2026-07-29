@@ -83,7 +83,17 @@ def load_mock():
     real_sai = {g: {18+i: v for i, v in enumerate(arr)} for g, arr in REAL_SAIDA_PAIRS.items()}
     plan_sai_total = {w: v for w, v in zip(range(18,36),
         [776,1812,1812,1812,1812,1748,1748,2748,1748,499,1296,1815,1815,1815,1296,566,1983,1983])}
-    return dict(cur_week=cur, real_stock=real_stock, plan_ent=plan_ent, plan_sai=plan_sai,
+    # --mock nao tem planilha ao vivo p/ ler a coluna "planejado" protegida contra negativo;
+    # aproximamos com a mesma soma cumulativa de antes, so pra --mock nao quebrar.
+    real_cur = dict(real_stock)
+    plan_pos = {}
+    for g in GROUPS:
+        s = real_stock.get(g, 0); plan_pos[g] = {}
+        for w in sorted(plan_ent[g]):
+            s = s + plan_ent[g].get(w, 0) - plan_sai[g].get(w, 0)
+            plan_pos[g][w] = round(s)
+    return dict(cur_week=cur, real_stock=real_stock, real_cur=real_cur, plan_pos=plan_pos,
+                plan_ent=plan_ent, plan_sai=plan_sai,
                 real_sai=real_sai, plan_sai_total=plan_sai_total)
 
 
@@ -177,11 +187,24 @@ def load_live():
     # so cai no real quando e efetivamente feito). Projetamos a partir da semana corrente,
     # somando o envase desta semana — assim nao acusamos quebra antes da hora.
     anchor_week = cur_week - 1
+    # cols_stock[w] = (col_planejado, col_real) -- nessa ordem, conforme o cabecalho da aba
+    # (linha 2 alterna "planejado","real" por semana).
     cols_stock = pair_cols(header_weeks(blk_stock[0][0]))
-    real_stock = {}
+    real_stock, real_cur, plan_pos = {}, {}, {}
     for _, g, row in blk_stock:
         c = cols_stock.get(anchor_week) or cols_stock.get(cur_week)
         real_stock[g] = round(_num(row[c[1]]) or 0)
+        c_cur = cols_stock.get(cur_week)
+        real_cur[g] = round(_num(row[c_cur[1]]) or 0) if c_cur else real_stock[g]
+        # posicao "planejado" (linhas 4-10, coluna planejado) direto da planilha -- essa
+        # coluna ja tem formula que impede o estoque de ficar negativo. Usamos ela em vez
+        # de reconstruir a projecao somando entrada-saida por fora (o que podia acumular
+        # erro e ficar negativo, um bug ja identificado).
+        plan_pos[g] = {}
+        for w, (ce, cr) in cols_stock.items():
+            v = _num(row[ce])
+            if v is not None:
+                plan_pos[g][w] = round(v)
     # --- plan entrada/saida (1o=entrada, 2o=saida) ---
     cols_pes = pair_cols(header_weeks(blk_plan_es[0][0]))
     plan_ent, plan_sai = {}, {}
@@ -199,7 +222,8 @@ def load_live():
             if w <= cur_week:
                 real_sai[g][w] = round(_num(row[cs]) or 0)
     plan_sai_total = {w: sum(plan_sai[g].get(w, 0) for g in GROUPS) for w in cols_pes}
-    return dict(cur_week=cur_week, real_stock=real_stock, plan_ent=plan_ent, plan_sai=plan_sai,
+    return dict(cur_week=cur_week, real_stock=real_stock, real_cur=real_cur, plan_pos=plan_pos,
+                plan_ent=plan_ent, plan_sai=plan_sai,
                 real_sai=real_sai, plan_sai_total=plan_sai_total)
 
 
@@ -209,16 +233,25 @@ def build_model(raw):
     # projeta A PARTIR da semana corrente (inclui o envase desta semana). A ancora
     # (raw['real_stock']) e o real da semana anterior = sobra com que comecamos a semana.
     proj_weeks = list(range(cur, cur + HORIZON))
+    WINDOW = 9  # semana atual (real) + proximas 8 (planejado) -- usado nas 3 tabelas novas
     m = {"cur_week": cur, "ano": ano, "proj_weeks": proj_weeks, "groups": {}}
+    plan_pos = raw.get("plan_pos", {})
+    real_cur = raw.get("real_cur", raw["real_stock"])
     for g in GROUPS:
-        s = raw["real_stock"].get(g, 0); proj = []
-        for w in proj_weeks:
-            s = s + raw["plan_ent"][g].get(w, 0) - raw["plan_sai"][g].get(w, 0)
+        pos_atual = real_cur.get(g, raw["real_stock"].get(g, 0))  # semana atual = REAL (linha 4-10 da planilha)
+        proj = [pos_atual]
+        s = pos_atual
+        for w in proj_weeks[1:]:
+            pp = plan_pos.get(g, {}).get(w)
+            if pp is not None:
+                s = pp  # posicao "planejado" pronta da planilha (ja protegida contra negativo)
+            else:
+                # fallback defensivo p/ semanas fora do horizonte lido da planilha
+                s = s + raw["plan_ent"][g].get(w, 0) - raw["plan_sai"][g].get(w, 0)
             proj.append(round(s))
         first_neg = next((proj_weeks[i] for i, v in enumerate(proj) if v < 0), None)
         # proximo envase = 1a semana (>= corrente) com entrada planejada > 0
         nxt = next(((w, raw["plan_ent"][g][w]) for w in proj_weeks if raw["plan_ent"][g].get(w, 0) > 0), None)
-        pos_atual = proj[0]   # posicao planejada da semana corrente (ancora + entra - sai da semana)
         if first_neg is not None and first_neg <= cur + 1:   # rompe esta semana ou na proxima
             sev = "critico"
         elif first_neg is not None:
@@ -229,7 +262,12 @@ def build_model(raw):
                               next_env=nxt,
                               ent_next=raw["plan_ent"][g].get(cur, 0),
                               sai_next=raw["plan_sai"][g].get(cur, 0),
-                              saldo_next=proj[0])
+                              saldo_next=proj[0],
+                              # janela das 3 tabelas novas: atual (real) + 8 planejadas
+                              pos_window=proj[:WINDOW],
+                              ent_window=[raw["plan_ent"][g].get(w, 0) for w in proj_weeks[:WINDOW]],
+                              sai_window=[raw["plan_sai"][g].get(w, 0) for w in proj_weeks[:WINDOW]])
+    m["window_weeks"] = proj_weeks[:WINDOW]
     m["total_stock"] = sum(m["groups"][g]["stock"] for g in GROUPS)
     # saidas realizadas
     weeks_real = sorted({w for g in GROUPS for w in raw["real_sai"].get(g, {})})
@@ -373,6 +411,21 @@ def render(m):
             <td>{risco}</td>
           </tr>''')
 
+    # ---- 3 tabelas novas: posicao (linhas 4-10), entrada planejada e saida planejada (linhas 15-21) ----
+    win = m["window_weeks"]
+    win_head = "<th>Grupo</th>" + "".join(f"<th>S{w}{' (atual)' if i==0 else ''}</th>" for i, w in enumerate(win))
+    pos_rows, ent_rows, sai_rows = [], [], []
+    for g in ordered:
+        gd = m["groups"][g]
+        pos_cells = "".join(
+            f'<td style="color:#A32D2D;font-weight:600">{fmt_l(v)}</td>' if v < 0 else f"<td>{fmt_l(v)}</td>"
+            for v in gd["pos_window"])
+        pos_rows.append(f'<tr><td><strong>{NAMES[g]}</strong></td>{pos_cells}</tr>')
+        ent_cells = "".join(f"<td>{fmt_l(v)}</td>" if v else "<td>—</td>" for v in gd["ent_window"])
+        ent_rows.append(f'<tr><td><strong>{NAMES[g]}</strong></td>{ent_cells}</tr>')
+        sai_cells = "".join(f"<td>{fmt_l(v)}</td>" if v else "<td>—</td>" for v in gd["sai_window"])
+        sai_rows.append(f'<tr><td><strong>{NAMES[g]}</strong></td>{sai_cells}</tr>')
+
     # ---- decisions ----
     dec = []
     if crit:
@@ -400,6 +453,10 @@ def render(m):
         "{{CUR_WEEK}}": str(cur), "{{NEXT_WEEK}}": str(nxt), "{{PREV_WEEK}}": str(cur-1), "{{CUR_DATE}}": cur_date,
         "{{PROJ_TITLE}}": f"S{cur} a S{end}", "{{RISK_TABLE_ROWS}}": "\n".join(rows),
         "{{REAL_TABLE_HEAD}}": real_head, "{{DECISIONS}}": "\n".join(dec),
+        "{{WIN_TABLE_HEAD}}": win_head,
+        "{{POSICAO_TABLE_ROWS}}": "\n".join(pos_rows),
+        "{{ENTRADA_TABLE_ROWS}}": "\n".join(ent_rows),
+        "{{SAIDA_TABLE_ROWS}}": "\n".join(sai_rows),
         "{{GENERATED_AT}}": datetime.datetime.now().strftime("%d/%m/%Y %H:%M") + " (S"+str(cur)+")",
         "{{SEMS_REAL}}": json.dumps([f"S{w}" for w in m["weeks_real"]]),
         "{{GRUPOS_DATA}}": json.dumps(m["gruposData"]),
