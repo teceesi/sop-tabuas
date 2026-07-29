@@ -249,7 +249,7 @@ def build_model(raw):
                 # fallback defensivo p/ semanas fora do horizonte lido da planilha
                 s = s + raw["plan_ent"][g].get(w, 0) - raw["plan_sai"][g].get(w, 0)
             proj.append(round(s))
-        first_neg = next((proj_weeks[i] for i, v in enumerate(proj) if v < 0), None)
+        first_neg = next((proj_weeks[i] for i, v in enumerate(proj) if v <= 0), None)
         # proximo envase = 1a semana (>= corrente) com entrada planejada > 0
         nxt = next(((w, raw["plan_ent"][g][w]) for w in proj_weeks if raw["plan_ent"][g].get(w, 0) > 0), None)
         if first_neg is not None and first_neg <= cur + 1:   # rompe esta semana ou na proxima
@@ -397,7 +397,7 @@ def render(m):
     badge_cls = {"critico":"b-danger","atencao":"b-warn","ok":"b-ok"}
     for g in ordered:
         gd = m["groups"][g]; bg = ' style="background:#FCEEED"' if gd["sev"]=="critico" else (' style="background:#FEF3CD"' if gd["sev"]=="atencao" else "")
-        saldo = gd["saldo_next"]; saldo_s = f'<td style="color:#A32D2D;font-weight:600">{fmt_l(saldo)}</td>' if saldo<0 else f'<td>{fmt_l(saldo)}</td>'
+        saldo = gd["saldo_next"]; saldo_s = f'<td style="color:#A32D2D;font-weight:600">{fmt_l(saldo)}</td>' if saldo<=0 else f'<td>{fmt_l(saldo)}</td>'
         stock_s = f'<td style="color:#A32D2D;font-weight:600">{fmt_l(gd["stock"])}</td>' if gd["stock"]<=0 else f'<td>{fmt_l(gd["stock"])}</td>'
         if gd["sev"]=="critico" and gd["stock"]<=0: risco = '<span class="badge b-danger">Ruptura atual</span>'
         elif gd["sev"]=="critico": risco = f'<span class="badge b-danger">Falta S{gd["first_neg"]}</span>'
@@ -419,7 +419,7 @@ def render(m):
         gd = m["groups"][g]
         pos_cells = ""
         for v in gd["pos_window"]:
-            if v < 0:
+            if v <= 0:
                 bg, col = "#FCEEED", "#A32D2D"
             elif v < 300:
                 bg, col = "#FEF3CD", "#854F0B"

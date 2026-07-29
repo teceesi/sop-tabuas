@@ -152,7 +152,7 @@
     <div id="riscoLegend" class="legend"></div>
     <div style="position:relative;width:100%;height:240px;"><canvas id="cRiscoCobertura"></canvas></div>
     <div id="riscoVazio" style="display:none;font-size:13px;color:#3B6D11;padding:10px 0;">✅ Nenhum grupo com ruptura projetada nas próximas 8 semanas.</div>
-    <div style="font-size:11px;color:#999;margin-top:8px;">Só entram no gráfico grupos cuja posição (planejada, direto da planilha) cruza zero em algum ponto da janela. Linha tracejada = zero (ruptura).</div>
+    <div style="font-size:11px;color:#999;margin-top:8px;">Só entram no gráfico grupos cuja posição (planejada, direto da planilha) chega a zero ou fica negativa em algum ponto da janela.</div>
   </div>
 
   <div class="panel">
@@ -165,7 +165,7 @@
         </tbody>
       </table>
     </div>
-    <div style="font-size:11px;color:#999;margin-top:8px;">Semana atual = coluna "real" da planilha. Semanas seguintes = coluna "planejado" da planilha (já com fórmula própria que impede estoque negativo).</div>
+    <div style="font-size:11px;color:#999;margin-top:8px;">Semana atual = coluna "real" da planilha. Semanas seguintes = coluna "planejado" da planilha. <span style="color:#A32D2D;font-weight:600">Vermelho</span> = ruptura (0 ou negativo) · <span style="color:#854F0B;font-weight:600">Laranja</span> = estoque baixo (&lt;300 L) · <span style="color:#3B6D11;font-weight:600">Verde</span> = ok.</div>
   </div>
 
   <div class="panel">
@@ -242,7 +242,7 @@ const allSems={{ALL_SEMS}};
 const windowWeeks={{WINDOW_WEEKS}};
 const posWindow={{POS_WINDOW}};
 const nomesGrupoRisco={trevo:'Trevo',capim:'Capim',estaca:'Estaca',NEIPA:'NEIPA',escura:'Escura',sour:'Sour',outras:'Outras'};
-const gruposEmRisco=Object.keys(posWindow).filter(g=>Math.min(...posWindow[g])<0);
+const gruposEmRisco=Object.keys(posWindow).filter(g=>Math.min(...posWindow[g])<=0);
 const riscoLegendEl=document.getElementById('riscoLegend');
 if(gruposEmRisco.length===0){
   document.getElementById('riscoVazio').style.display='block';
