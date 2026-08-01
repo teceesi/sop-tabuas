@@ -1,8 +1,8 @@
 {
  "cur_week": 31,
  "ano": 2026,
- "total_stock": 4374,
- "gerado_em": "31/07/2026 16:13",
+ "total_stock": 4954,
+ "gerado_em": "01/08/2026 15:30",
  "dash_url": "https://teceesi.github.io/sop-tabuas/",
  "grupos": {
   "trevo": {
@@ -34,7 +34,7 @@
   },
   "NEIPA": {
    "nome": "NEIPA",
-   "stock": 330,
+   "stock": 910,
    "sev": "ok",
    "zerada": false,
    "first_neg": null,
