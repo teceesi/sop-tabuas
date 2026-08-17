@@ -1,1 +1,7 @@
-{}
+{
+ "outras": {
+  "stock": 400,
+  "first_neg": 35,
+  "zerada": false
+ }
+}
