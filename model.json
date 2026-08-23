@@ -2,7 +2,7 @@
  "cur_week": 34,
  "ano": 2026,
  "total_stock": 5341,
- "gerado_em": "22/08/2026 14:41",
+ "gerado_em": "23/08/2026 14:43",
  "dash_url": "https://teceesi.github.io/sop-tabuas/",
  "grupos": {
   "trevo": {
@@ -64,8 +64,8 @@
    "stock": 780,
    "sev": "atencao",
    "zerada": false,
-   "first_neg": 39,
-   "rompe_label": "S39 (21/set)",
+   "first_neg": 44,
+   "rompe_label": "S44 (26/out)",
    "envase_label": "S35 (24/ago)"
   }
  }
