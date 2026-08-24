@@ -1,1 +1,7 @@
-{}
+{
+ "escura": {
+  "stock": 120,
+  "first_neg": 36,
+  "zerada": false
+ }
+}
