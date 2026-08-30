@@ -4,11 +4,6 @@
   "first_neg": 35,
   "zerada": true
  },
- "escura": {
-  "stock": 90,
-  "first_neg": 36,
-  "zerada": false
- },
  "sour": {
   "stock": 0,
   "first_neg": 35,
