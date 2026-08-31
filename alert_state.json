@@ -1,12 +1,17 @@
 {
  "trevo": {
   "stock": 0,
-  "first_neg": 35,
+  "first_neg": 36,
   "zerada": true
+ },
+ "escura": {
+  "stock": 40,
+  "first_neg": 37,
+  "zerada": false
  },
  "sour": {
   "stock": 0,
-  "first_neg": 35,
+  "first_neg": 36,
   "zerada": true
  }
 }
