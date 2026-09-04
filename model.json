@@ -1,8 +1,8 @@
 {
  "cur_week": 36,
  "ano": 2026,
- "total_stock": 1710,
- "gerado_em": "03/09/2026 17:53",
+ "total_stock": 2688,
+ "gerado_em": "04/09/2026 17:38",
  "dash_url": "https://teceesi.github.io/sop-tabuas/",
  "grupos": {
   "trevo": {
@@ -25,7 +25,7 @@
   },
   "estaca": {
    "nome": "Estaca",
-   "stock": 60,
+   "stock": 1038,
    "sev": "atencao",
    "zerada": false,
    "first_neg": 40,
