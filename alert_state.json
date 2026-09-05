@@ -3,10 +3,5 @@
   "stock": 100,
   "first_neg": 37,
   "zerada": false
- },
- "sour": {
-  "stock": 0,
-  "first_neg": 36,
-  "zerada": true
  }
 }
