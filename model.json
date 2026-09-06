@@ -2,16 +2,16 @@
  "cur_week": 36,
  "ano": 2026,
  "total_stock": 5049,
- "gerado_em": "05/09/2026 16:51",
+ "gerado_em": "06/09/2026 17:07",
  "dash_url": "https://teceesi.github.io/sop-tabuas/",
  "grupos": {
   "trevo": {
    "nome": "Trevo",
    "stock": 150,
-   "sev": "atencao",
+   "sev": "ok",
    "zerada": false,
-   "first_neg": 38,
-   "rompe_label": "S38 (14/set)",
+   "first_neg": null,
+   "rompe_label": null,
    "envase_label": "S36 (31/ago)"
   },
   "capim": {
@@ -26,28 +26,28 @@
   "estaca": {
    "nome": "Estaca",
    "stock": 1038,
-   "sev": "atencao",
+   "sev": "ok",
    "zerada": false,
-   "first_neg": 40,
-   "rompe_label": "S40 (28/set)",
+   "first_neg": null,
+   "rompe_label": null,
    "envase_label": "S36 (31/ago)"
   },
   "NEIPA": {
    "nome": "NEIPA",
    "stock": 1631,
-   "sev": "atencao",
+   "sev": "ok",
    "zerada": false,
-   "first_neg": 42,
-   "rompe_label": "S42 (12/out)",
+   "first_neg": null,
+   "rompe_label": null,
    "envase_label": "S36 (31/ago)"
   },
   "escura": {
    "nome": "Escura",
    "stock": 100,
-   "sev": "critico",
+   "sev": "atencao",
    "zerada": false,
-   "first_neg": 37,
-   "rompe_label": "S37 (07/set)",
+   "first_neg": 39,
+   "rompe_label": "S39 (21/set)",
    "envase_label": "S38 (14/set)"
   },
   "sour": {
@@ -64,8 +64,8 @@
    "stock": 350,
    "sev": "atencao",
    "zerada": false,
-   "first_neg": 39,
-   "rompe_label": "S39 (21/set)",
+   "first_neg": 40,
+   "rompe_label": "S40 (28/set)",
    "envase_label": "S37 (07/set)"
   }
  }
