@@ -1,11 +1,6 @@
 {
- "estaca": {
-  "stock": 810,
-  "first_neg": 40,
-  "zerada": false
- },
- "escura": {
-  "stock": 176,
+ "capim": {
+  "stock": 50,
   "first_neg": 40,
   "zerada": false
  }
