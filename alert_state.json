@@ -1,7 +1,12 @@
 {
- "capim": {
-  "stock": 50,
-  "first_neg": 40,
+ "escura": {
+  "stock": 20,
+  "first_neg": 41,
+  "zerada": false
+ },
+ "outras": {
+  "stock": 230,
+  "first_neg": 41,
   "zerada": false
  }
 }

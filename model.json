@@ -1,72 +1,72 @@
 {
- "cur_week": 39,
+ "cur_week": 40,
  "ano": 2026,
- "total_stock": 3679,
- "gerado_em": "27/09/2026 18:29",
+ "total_stock": 2410,
+ "gerado_em": "01/10/2026 19:36",
  "dash_url": "https://teceesi.github.io/sop-tabuas/",
  "grupos": {
   "trevo": {
    "nome": "Trevo",
-   "stock": 748,
+   "stock": 560,
    "sev": "ok",
    "zerada": false,
    "first_neg": null,
    "rompe_label": null,
-   "envase_label": "S39 (21/set)"
+   "envase_label": "S40 (28/set)"
   },
   "capim": {
    "nome": "Capim",
-   "stock": 50,
-   "sev": "critico",
-   "zerada": false,
-   "first_neg": 40,
-   "rompe_label": "S40 (28/set)",
-   "envase_label": "S39 (21/set)"
-  },
-  "estaca": {
-   "nome": "Estaca",
-   "stock": 810,
+   "stock": 630,
    "sev": "ok",
    "zerada": false,
    "first_neg": null,
    "rompe_label": null,
+   "envase_label": "S42 (12/out)"
+  },
+  "estaca": {
+   "nome": "Estaca",
+   "stock": 80,
+   "sev": "atencao",
+   "zerada": false,
+   "first_neg": 52,
+   "rompe_label": "S52 (21/dez)",
    "envase_label": "S41 (05/out)"
   },
   "NEIPA": {
    "nome": "NEIPA",
-   "stock": 790,
-   "sev": "ok",
-   "zerada": false,
-   "first_neg": null,
-   "rompe_label": null,
-   "envase_label": "S41 (05/out)"
-  },
-  "escura": {
-   "nome": "Escura",
-   "stock": 176,
+   "stock": 520,
    "sev": "atencao",
    "zerada": false,
    "first_neg": 42,
    "rompe_label": "S42 (12/out)",
-   "envase_label": "S39 (21/set)"
+   "envase_label": "S43 (19/out)"
+  },
+  "escura": {
+   "nome": "Escura",
+   "stock": 20,
+   "sev": "critico",
+   "zerada": false,
+   "first_neg": 41,
+   "rompe_label": "S41 (05/out)",
+   "envase_label": "S43 (19/out)"
   },
   "sour": {
    "nome": "Sour",
-   "stock": 530,
+   "stock": 370,
    "sev": "ok",
    "zerada": false,
    "first_neg": null,
    "rompe_label": null,
-   "envase_label": "S41 (05/out)"
+   "envase_label": "S43 (19/out)"
   },
   "outras": {
    "nome": "Outras",
-   "stock": 575,
-   "sev": "atencao",
+   "stock": 230,
+   "sev": "critico",
    "zerada": false,
-   "first_neg": 48,
-   "rompe_label": "S48 (23/nov)",
-   "envase_label": "S40 (28/set)"
+   "first_neg": 41,
+   "rompe_label": "S41 (05/out)",
+   "envase_label": "S43 (19/out)"
   }
  }
 }
