@@ -1,12 +1,17 @@
 {
  "estaca": {
   "stock": 0,
-  "first_neg": 40,
+  "first_neg": 41,
   "zerada": true
+ },
+ "NEIPA": {
+  "stock": 400,
+  "first_neg": 42,
+  "zerada": false
  },
  "escura": {
   "stock": 20,
-  "first_neg": 41,
+  "first_neg": 42,
   "zerada": false
  }
 }
