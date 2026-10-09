@@ -1,9 +1,4 @@
 {
- "estaca": {
-  "stock": 0,
-  "first_neg": 41,
-  "zerada": true
- },
  "escura": {
   "stock": 20,
   "first_neg": 42,
