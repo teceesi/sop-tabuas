@@ -1,6 +1,6 @@
 {
- "NEIPA": {
-  "stock": 350,
+ "capim": {
+  "stock": 280,
   "first_neg": 43,
   "zerada": false
  }
