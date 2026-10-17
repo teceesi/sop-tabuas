@@ -1,8 +1,8 @@
 {
  "cur_week": 42,
  "ano": 2026,
- "total_stock": 4163,
- "gerado_em": "16/10/2026 18:08",
+ "total_stock": 5178,
+ "gerado_em": "17/10/2026 17:16",
  "dash_url": "https://teceesi.github.io/sop-tabuas/",
  "grupos": {
   "trevo": {
@@ -16,7 +16,7 @@
   },
   "capim": {
    "nome": "Capim",
-   "stock": 230,
+   "stock": 1245,
    "sev": "ok",
    "zerada": false,
    "first_neg": null,
