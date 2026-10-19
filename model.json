@@ -1,13 +1,13 @@
 {
- "cur_week": 42,
+ "cur_week": 43,
  "ano": 2026,
- "total_stock": 5178,
- "gerado_em": "18/10/2026 17:25",
+ "total_stock": 5753,
+ "gerado_em": "19/10/2026 19:59",
  "dash_url": "https://teceesi.github.io/sop-tabuas/",
  "grupos": {
   "trevo": {
    "nome": "Trevo",
-   "stock": 380,
+   "stock": 955,
    "sev": "ok",
    "zerada": false,
    "first_neg": null,
@@ -21,7 +21,7 @@
    "zerada": false,
    "first_neg": null,
    "rompe_label": null,
-   "envase_label": "S42 (12/out)"
+   "envase_label": "S45 (02/nov)"
   },
   "estaca": {
    "nome": "Estaca",
@@ -44,11 +44,11 @@
   "escura": {
    "nome": "Escura",
    "stock": 50,
-   "sev": "atencao",
+   "sev": "critico",
    "zerada": false,
    "first_neg": 44,
    "rompe_label": "S44 (26/out)",
-   "envase_label": "S42 (12/out)"
+   "envase_label": "S43 (19/out)"
   },
   "sour": {
    "nome": "Sour",
