@@ -1,1 +1,12 @@
-{}
+{
+ "trevo": {
+  "stock": 0,
+  "first_neg": 44,
+  "zerada": true
+ },
+ "estaca": {
+  "stock": 0,
+  "first_neg": 44,
+  "zerada": true
+ }
+}
