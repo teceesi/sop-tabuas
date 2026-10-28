@@ -1,13 +1,13 @@
 {
  "cur_week": 44,
  "ano": 2026,
- "total_stock": 3084,
- "gerado_em": "27/10/2026 19:27",
+ "total_stock": 3044,
+ "gerado_em": "28/10/2026 19:37",
  "dash_url": "https://teceesi.github.io/sop-tabuas/",
  "grupos": {
   "trevo": {
    "nome": "Trevo",
-   "stock": 574,
+   "stock": 634,
    "sev": "ok",
    "zerada": false,
    "first_neg": null,
@@ -16,7 +16,7 @@
   },
   "capim": {
    "nome": "Capim",
-   "stock": 670,
+   "stock": 660,
    "sev": "ok",
    "zerada": false,
    "first_neg": null,
@@ -34,7 +34,7 @@
   },
   "NEIPA": {
    "nome": "NEIPA",
-   "stock": 410,
+   "stock": 380,
    "sev": "ok",
    "zerada": false,
    "first_neg": null,
@@ -61,7 +61,7 @@
   },
   "outras": {
    "nome": "Outras",
-   "stock": 760,
+   "stock": 700,
    "sev": "ok",
    "zerada": false,
    "first_neg": null,
