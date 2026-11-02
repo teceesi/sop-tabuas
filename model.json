@@ -1,8 +1,8 @@
 {
- "cur_week": 44,
+ "cur_week": 45,
  "ano": 2026,
  "total_stock": 4099,
- "gerado_em": "01/11/2026 18:58",
+ "gerado_em": "02/11/2026 22:48",
  "dash_url": "https://teceesi.github.io/sop-tabuas/",
  "grupos": {
   "trevo": {
@@ -12,7 +12,7 @@
    "zerada": false,
    "first_neg": null,
    "rompe_label": null,
-   "envase_label": "S44 (26/out)"
+   "envase_label": "S45 (02/nov)"
   },
   "capim": {
    "nome": "Capim",
@@ -30,7 +30,7 @@
    "zerada": false,
    "first_neg": null,
    "rompe_label": null,
-   "envase_label": "S44 (26/out)"
+   "envase_label": "S46 (09/nov)"
   },
   "NEIPA": {
    "nome": "NEIPA",
